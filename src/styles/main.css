@@ -13,9 +13,9 @@
   --ember-deep: #0f7a4d;
   --ember-glow: rgba(55, 255, 168, 0.45);
   --hairline: rgba(120, 255, 190, 0.14);
-  --font-display: 'Cinzel', 'Times New Roman', serif;
+  --font-display: 'Syne', system-ui, sans-serif;
   --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-ui: 'Space Grotesk', system-ui, sans-serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -99,8 +99,9 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 
 .loader-count {
   font-family: var(--font-display);
+  font-weight: 800;
   font-size: clamp(3.5rem, 10vw, 6rem);
-  letter-spacing: 0.06em;
+  letter-spacing: -0.02em;
   color: var(--bone);
   margin-top: 1rem;
 }
@@ -148,8 +149,8 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 .brand {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 0.42em;
+  font-size: 0.9rem;
+  letter-spacing: 0.3em;
   color: var(--bone);
 }
 .brand:hover { color: var(--ember); transition: color 0.4s; }
@@ -165,7 +166,7 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
   text-transform: uppercase;
   color: var(--bone-faint);
 }
-#chapter-numeral { font-family: var(--font-display); color: var(--ember); font-size: 0.8rem; }
+#chapter-numeral { font-family: var(--font-display); font-weight: 700; color: var(--ember); font-size: 0.78rem; }
 
 .head-cta {
   font-size: 0.68rem;
@@ -300,10 +301,10 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 
 .chapter-heading {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 700;
   font-size: clamp(2.4rem, 6vw, 4.6rem);
-  line-height: 1.08;
-  letter-spacing: 0.02em;
+  line-height: 1.04;
+  letter-spacing: -0.015em;
   text-wrap: balance;
 }
 
@@ -340,13 +341,14 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 
 .hero-title {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 800;
   font-size: clamp(3.4rem, 12vw, 9.5rem);
-  line-height: 0.98;
-  letter-spacing: 0.12em;
+  line-height: 0.94;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
   display: flex;
   flex-direction: column;
-  text-shadow: 0 0 60px rgba(55, 255, 168, 0.18);
+  text-shadow: 0 0 70px rgba(55, 255, 168, 0.22), 0 2px 30px rgba(2, 8, 6, 0.65);
 }
 
 .hero-sub {
@@ -361,9 +363,10 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 /* ── Calling ──────────────────────────────────────────────── */
 .big-line {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(2.2rem, 5.4vw, 4.4rem);
-  line-height: 1.14;
+  font-weight: 700;
+  font-size: clamp(2.1rem, 5.2vw, 4.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
   display: flex;
   flex-direction: column;
 }
@@ -381,18 +384,19 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 .xp-item:last-child { border-bottom: 1px solid var(--hairline); }
 
 .xp-period {
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  letter-spacing: 0.18em;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
   color: var(--ember);
-  padding-top: 0.35rem;
+  padding-top: 0.45rem;
 }
 
 .xp-role {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(1.3rem, 2.6vw, 1.9rem);
-  letter-spacing: 0.03em;
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2.5vw, 1.8rem);
+  letter-spacing: -0.01em;
 }
 .xp-company {
   font-family: var(--font-serif);
@@ -492,16 +496,17 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 
 .work-meta { display: flex; align-items: baseline; gap: 1.2rem; }
 .work-index {
-  font-family: var(--font-display);
-  font-size: 0.75rem;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 0.72rem;
   color: var(--ember);
   letter-spacing: 0.2em;
 }
 .work-title {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(1.25rem, 2.4vw, 1.8rem);
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  font-size: clamp(1.2rem, 2.3vw, 1.7rem);
+  letter-spacing: -0.01em;
 }
 .work-cat {
   margin-left: auto;
@@ -540,13 +545,13 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 }
 
 .arsenal-group h3 {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 1rem;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 0.8rem;
   letter-spacing: 0.34em;
   text-transform: uppercase;
   color: var(--ember);
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.4rem;
 }
 .arsenal-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 .arsenal-tag {
@@ -592,10 +597,10 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 }
 .honor-card h3 {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 1.15rem;
+  font-weight: 700;
+  font-size: 1.1rem;
   line-height: 1.35;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 }
 .honor-event {
   font-family: var(--font-serif);
@@ -640,10 +645,10 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 
 .summon-title {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(3rem, 9vw, 7rem);
-  line-height: 1.05;
-  letter-spacing: 0.05em;
+  font-weight: 800;
+  font-size: clamp(2.8rem, 8.5vw, 6.6rem);
+  line-height: 1.0;
+  letter-spacing: -0.015em;
   display: flex;
   flex-direction: column;
 }

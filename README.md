@@ -31,6 +31,22 @@ npm run preview    # serve the build locally
 `vite.config.js` uses a relative base (`./`), so the `dist/` folder works on any static
 host — GitHub Pages, Netlify, Vercel, or a plain web server.
 
+## The knight keyart (important)
+
+The 3D stage projects four knight artworks onto WebGL planes with a
+depth-parallax shader. **Add your artwork files here:**
+
+```
+public/img/knight-1.jpg   — full-body front, portal centered   (hero / gallery / finale)
+public/img/knight-2.jpg   — full-body close-up                 (skills chapter)
+public/img/knight-3.jpg   — helmet close-up                    (awards chapter)
+public/img/knight-4.jpg   — wide side view, knight at right    (about / experience)
+```
+
+Wide images (~16:9, ≥2000px) with deep blacks work best. Until a file exists,
+the site falls back to AI-generated stand-in art hosted on a CDN
+(`FALLBACK` in `src/main.js`).
+
 ## Editing content
 
 All copy, projects, experience, skills, honors and contact details live in one file:
@@ -47,11 +63,10 @@ the link can view") for images to load.
 
 | Area | File |
 | --- | --- |
-| 3D scene setup, lights, fog, bloom | `src/scene/World.js` |
-| The knight (procedural model + cape wind) | `src/scene/Knight.js` |
-| The portal (arch shader + halo) | `src/scene/Portal.js` |
+| Renderer, fog sprites, bloom | `src/scene/World.js` |
+| Keyart stage (depth-parallax planes, crossfades, flare) | `src/scene/Keyart.js` |
 | Ember particles | `src/scene/Particles.js` |
-| Scroll → camera/DOM choreography | `src/story.js` |
+| Scroll → scene/DOM choreography | `src/story.js` |
 | DOM population from content data | `src/populate.js` |
 | Loader & boot | `src/main.js` |
-| Theme & layout | `src/styles/main.css` |
+| Theme & typography | `src/styles/main.css` |

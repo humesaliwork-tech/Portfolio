@@ -9,12 +9,13 @@ export class Particles {
     const seeds = new Float32Array(count);
     const sizes = new Float32Array(count);
 
+    // embers live in front of the keyart plane (z > 0)
     for (let i = 0; i < count; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 16;
-      positions[i * 3 + 1] = Math.random() * 7;
-      positions[i * 3 + 2] = -6.5 + Math.random() * 11;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 7.4;
+      positions[i * 3 + 2] = 0.3 + Math.random() * 3.4;
       seeds[i] = Math.random() * 100;
-      sizes[i] = 0.4 + Math.random() * 1.4;
+      sizes[i] = 0.35 + Math.random() * 1.1;
     }
 
     const geo = new THREE.BufferGeometry();
@@ -42,10 +43,10 @@ export class Particles {
         void main() {
           vec3 p = position;
           float t = uTime * 0.16;
-          // slow rise with wrap
-          p.y = mod(p.y + t * (0.4 + fract(aSeed) * 0.6), 7.0);
+          // slow rise with wrap across the viewport band
+          p.y = mod(p.y + 3.7 + t * (0.4 + fract(aSeed) * 0.6), 7.4) - 3.7;
           p.x += sin(uTime * 0.25 + aSeed) * 0.5;
-          p.z += cos(uTime * 0.18 + aSeed * 1.7) * 0.35;
+          p.z += cos(uTime * 0.18 + aSeed * 1.7) * 0.3;
 
           vTwinkle = 0.35 + 0.65 * (0.5 + 0.5 * sin(uTime * (0.8 + fract(aSeed * 0.13) * 1.6) + aSeed));
 

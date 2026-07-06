@@ -1,20 +1,28 @@
-import '@fontsource/cinzel/400.css';
-import '@fontsource/cinzel/700.css';
+import '@fontsource/syne/600.css';
+import '@fontsource/syne/700.css';
+import '@fontsource/syne/800.css';
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/500.css';
 import '@fontsource/cormorant-garamond/300.css';
 import '@fontsource/cormorant-garamond/500-italic.css';
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/500.css';
 import './styles/main.css';
 
 import gsap from 'gsap';
 import { World } from './scene/World.js';
-import { Knight } from './scene/Knight.js';
-import { Portal } from './scene/Portal.js';
+import { KeyartStage } from './scene/Keyart.js';
 import { Particles } from './scene/Particles.js';
 import { populate } from './populate.js';
 import { buildStory } from './story.js';
 
 populate();
+
+// ── the four knight artworks ─────────────────────────────────
+// Drop your own keyart into public/img as knight-1.jpg … knight-4.jpg
+// (1 full-body front · 2 full-body close · 3 helmet close-up · 4 wide
+// side view). Until a file exists, the generated fallback art is used.
+const FALLBACK =
+  'https://d8j0ntlcm91z4.cloudfront.net/user_3A9SZn4dAhJ71TsHiyaNNYmkcoH/hf_20260706_103058_8dfa698e-b7b9-4747-ae4e-4dbab75e4a4a.png';
+const ARTS = [1, 2, 3, 4].map((n) => [`img/knight-${n}.jpg`, FALLBACK]);
 
 // ── build the world ──────────────────────────────────────────
 const canvas = document.getElementById('stage');
@@ -31,40 +39,45 @@ try {
   throw new Error('WebGL not available');
 }
 
-const knight = new Knight();
-world.add(knight.group);
-world.onTick((t) => knight.tick(t));
+const stage = new KeyartStage(world, ARTS);
 
-const portal = new Portal();
-world.add(portal.group);
-world.onTick((t) => portal.tick(t));
-
-const particles = new Particles(world.isMobile ? 240 : 420);
+const particles = new Particles(world.isMobile ? 200 : 380);
 world.add(particles.points);
 world.onTick((t) => particles.tick(t));
 
 world.start();
-buildStory(world, knight, portal);
+buildStory(world, stage);
 
 // ── loader → intro ───────────────────────────────────────────
 const num = document.getElementById('loader-num');
 const fill = document.getElementById('loader-fill');
 const progress = { v: 0 };
+let artDone = 0;
+
+const paint = () => {
+  num.textContent = Math.round(progress.v);
+  fill.style.transform = `scaleX(${progress.v / 100})`;
+};
+
+// crawl toward 90 while textures stream in; each finished artwork
+// raises the floor, fonts + first frame close it out.
+const warmup = gsap.to(progress, {
+  v: 88,
+  duration: 3.2,
+  ease: 'power1.out',
+  onUpdate: paint,
+});
+stage.onProgress((done, total) => {
+  artDone = done / total;
+  progress.v = Math.max(progress.v, artDone * 88);
+  paint();
+});
 
 const ready = Promise.all([
+  stage.ready,
   document.fonts?.ready ?? Promise.resolve(),
   new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))),
 ]);
-
-const warmup = gsap.to(progress, {
-  v: 90,
-  duration: 2.2,
-  ease: 'power2.out',
-  onUpdate: () => {
-    num.textContent = Math.round(progress.v);
-    fill.style.transform = `scaleX(${progress.v / 100})`;
-  },
-});
 
 ready.then(() => {
   warmup.kill();
@@ -72,10 +85,7 @@ ready.then(() => {
     v: 100,
     duration: 0.5,
     ease: 'power1.inOut',
-    onUpdate: () => {
-      num.textContent = Math.round(progress.v);
-      fill.style.transform = `scaleX(${progress.v / 100})`;
-    },
+    onUpdate: paint,
     onComplete: intro,
   });
 });
@@ -88,16 +98,14 @@ function intro() {
     ease: 'power2.inOut',
     onComplete: () => document.getElementById('loader').remove(),
   });
-  tl.from(
-    world.camState,
-    { pz: 15, py: 3.4, duration: 2.4, ease: 'power3.out' },
-    '-=0.3'
-  );
+  // cinematic settle onto the gate
+  const hero = stage.planes[0].state;
+  tl.from(hero, { scale: hero.scale * 1.14, duration: 2.6, ease: 'power3.out' }, '-=0.4');
   tl.to(
     '#hero .reveal',
     { opacity: 1, y: 0, duration: 1.2, stagger: 0.15, ease: 'power3.out' },
-    '-=1.8'
+    '-=2.0'
   );
-  tl.to(['.site-head', '.rail'], { opacity: 1, duration: 1 }, '-=0.8');
+  tl.to(['.site-head', '.rail'], { opacity: 1, duration: 1 }, '-=0.9');
   tl.to('#scroll-hint', { opacity: 1, duration: 1 }, '-=0.6');
 }

@@ -1,0 +1,24 @@
+{
+  "name": "humes-ali-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "3D interactive portfolio of Syed Humes Ali — Senior Creative Designer & 3D Artist",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource/cinzel": "^5.1.0",
+    "@fontsource/cormorant-garamond": "^5.1.0",
+    "@fontsource/inter": "^5.1.0",
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.14",
+    "three": "^0.169.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.61.1",
+    "vite": "^5.4.8"
+  }
+}

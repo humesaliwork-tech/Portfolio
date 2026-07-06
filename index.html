@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Humes Ali — Senior Creative Designer & 3D Artist</title>
+  <meta name="description" content="The interactive 3D portfolio of Syed Humes Ali — Senior Creative Designer & 3D Artist, Dubai. Brand, motion, 3D and campaign design." />
+  <meta property="og:title" content="Humes Ali — Creative Designer & 3D Artist" />
+  <meta property="og:description" content="A warrior's tale told in design — brand, motion and 3D work from Dubai." />
+  <meta name="theme-color" content="#02100a" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>⚔️</text></svg>" />
+</head>
+<body>
+  <!-- ══ Loader ══ -->
+  <div id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <div class="loader-sigil">⚔</div>
+      <div class="loader-count"><span id="loader-num">0</span></div>
+      <div class="loader-bar"><span id="loader-fill"></span></div>
+      <p class="loader-tag">Forging the tale…</p>
+    </div>
+  </div>
+
+  <!-- ══ 3D stage ══ -->
+  <canvas id="stage"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- ══ Chrome ══ -->
+  <header class="site-head">
+    <a class="brand" href="#hero" data-nav>HUMES&nbsp;ALI</a>
+    <div class="head-right">
+      <span class="chapter-tag"><span id="chapter-numeral"></span><span id="chapter-label">The Gate</span></span>
+      <a class="head-cta" href="#summon" data-nav>Join Forces</a>
+    </div>
+  </header>
+
+  <nav class="rail" aria-label="Chapters"></nav>
+
+  <div class="scroll-hint" id="scroll-hint">
+    <span class="scroll-hint-line"></span>
+    <span>Scroll to begin the tale</span>
+  </div>
+
+  <!-- ══ Story ══ -->
+  <main id="content">
+
+    <!-- The Gate -->
+    <section class="chapter chapter--hero" id="hero" data-chapter="hero">
+      <div class="hero-core">
+        <p class="hero-kicker reveal">A tale of craft, told in the dark</p>
+        <h1 class="hero-title">
+          <span class="reveal">HUMES</span>
+          <span class="reveal">ALI</span>
+        </h1>
+        <p class="hero-sub reveal">Senior Creative Designer <em>&amp;</em> 3D Artist — Dubai</p>
+      </div>
+    </section>
+
+    <!-- I · The Calling -->
+    <section class="chapter chapter--calling" id="calling" data-chapter="calling">
+      <div class="chapter-body">
+        <p class="chapter-eyebrow reveal">Chapter I — The Calling</p>
+        <h2 class="big-line">
+          <span class="reveal">Every brand is a battle</span>
+          <span class="reveal">for attention.</span>
+          <span class="reveal"><em>I fight it with design.</em></span>
+        </h2>
+        <p class="chapter-text reveal" id="calling-summary"></p>
+      </div>
+    </section>
+
+    <!-- II · The Campaigns -->
+    <section class="chapter chapter--campaigns" id="campaigns" data-chapter="campaigns">
+      <div class="chapter-body">
+        <p class="chapter-eyebrow reveal">Chapter II — The Campaigns</p>
+        <h2 class="chapter-heading reveal">Battles fought,<br /><em>ground gained.</em></h2>
+        <ol class="xp-list" id="xp-list"></ol>
+      </div>
+    </section>
+
+    <!-- III · The Conquests -->
+    <section class="chapter chapter--conquests" id="conquests" data-chapter="conquests">
+      <div class="conquests-intro chapter-body">
+        <p class="chapter-eyebrow reveal">Chapter III — The Conquests</p>
+        <h2 class="chapter-heading reveal">Work that <em>survived</em><br />the fire.</h2>
+        <p class="chapter-text reveal">Selected campaigns, identities and 3D worlds. Drag through the dark →</p>
+      </div>
+      <div class="gallery-pin" id="gallery-pin">
+        <div class="gallery-track" id="gallery-track"></div>
+      </div>
+      <div class="also-served chapter-body">
+        <p class="chapter-eyebrow reveal">Also served</p>
+        <p class="also-list reveal" id="also-list"></p>
+      </div>
+    </section>
+
+    <!-- IV · The Arsenal -->
+    <section class="chapter chapter--arsenal" id="arsenal" data-chapter="arsenal">
+      <div class="chapter-body">
+        <p class="chapter-eyebrow reveal">Chapter IV — The Arsenal</p>
+        <h2 class="chapter-heading reveal">The blades<br /><em>I carry.</em></h2>
+        <div class="arsenal-groups" id="arsenal-groups"></div>
+      </div>
+    </section>
+
+    <!-- V · The Honors -->
+    <section class="chapter chapter--honors" id="honors" data-chapter="honors">
+      <div class="chapter-body">
+        <p class="chapter-eyebrow reveal">Chapter V — The Honors</p>
+        <h2 class="chapter-heading reveal">Marks of<br /><em>the crown.</em></h2>
+        <div class="honor-cards" id="honor-cards"></div>
+        <div class="education reveal" id="education"></div>
+      </div>
+    </section>
+
+    <!-- VI · Join Forces -->
+    <section class="chapter chapter--summon" id="summon" data-chapter="summon">
+      <div class="chapter-body summon-body">
+        <p class="chapter-eyebrow reveal">Chapter VI — Join Forces</p>
+        <h2 class="summon-title">
+          <span class="reveal">The portal</span>
+          <span class="reveal"><em>is open.</em></span>
+        </h2>
+        <a class="summon-mail reveal" id="summon-mail" href="#">humesaliwork@gmail.com</a>
+        <ul class="summon-links reveal" id="summon-links"></ul>
+        <footer class="colophon reveal">
+          <span id="colophon-left"></span>
+          <span>Forged in WebGL · Dubai</span>
+        </footer>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

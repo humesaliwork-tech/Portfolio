@@ -9,6 +9,9 @@
 export const driveImg = (id, w = 1600) =>
   `https://drive.google.com/thumbnail?id=${id}&sz=w${w}`;
 
+export const driveFolder = (id) =>
+  `https://drive.google.com/drive/folders/${id}`;
+
 export const profile = {
   name: 'Humes Ali',
   fullName: 'Syed Humes Ali',
@@ -87,6 +90,7 @@ export const experience = [
 export const projects = [
   {
     title: 'DIFC Ignyte',
+    drive: driveFolder('14NAg1scP2qbyJQwaCjbEMNItV-hfq7e3'),
     category: 'Brand & Event Design',
     year: '2024–26',
     description:
@@ -99,6 +103,7 @@ export const projects = [
   },
   {
     title: '21st Asian U20 Athletics Championship',
+    drive: driveFolder('11UzFMPD42_CMnvrPSZLPFW5wBqMBhOLr'),
     category: 'Event Branding · Website · Campaign',
     year: '2024',
     description:
@@ -111,6 +116,7 @@ export const projects = [
   },
   {
     title: '13th Regional IP Crime Conference',
+    drive: driveFolder('1SnwYCsMPBCou7zQWjz263SToUMB1SqP0'),
     category: 'Event Branding · Website · Print',
     year: '2024',
     description:
@@ -123,6 +129,7 @@ export const projects = [
   },
   {
     title: 'BMW E30 M3',
+    drive: driveFolder('1IIGsCC-5PVgr7tuq7GJTRqZswJcxKpYk'),
     category: '3D Modeling & Animation',
     year: '2023',
     description:
@@ -135,6 +142,7 @@ export const projects = [
   },
   {
     title: 'Ya Halla',
+    drive: driveFolder('1N2Q8EFitn9bcXugfuafZMtH-WRziapn6'),
     category: 'Brand Identity & Campaign',
     year: '2024',
     description:
@@ -147,6 +155,7 @@ export const projects = [
   },
   {
     title: 'Kohinoor Diamond',
+    drive: driveFolder('1IIGsCC-5PVgr7tuq7GJTRqZswJcxKpYk'),
     category: '3D Art & Lighting',
     year: '2022',
     description:
@@ -158,6 +167,7 @@ export const projects = [
   },
   {
     title: 'Iron Man — Light Study',
+    drive: driveFolder('1IIGsCC-5PVgr7tuq7GJTRqZswJcxKpYk'),
     category: '3D Lighting & Look-Dev',
     year: '2022',
     description:
@@ -170,6 +180,7 @@ export const projects = [
   },
   {
     title: 'Throne-Room Lamp',
+    drive: driveFolder('1IIGsCC-5PVgr7tuq7GJTRqZswJcxKpYk'),
     category: '3D Product Visualization',
     year: '2021',
     description:
@@ -182,6 +193,7 @@ export const projects = [
   },
   {
     title: 'Digital Paintings',
+    drive: driveFolder('1ncmiw0fZ9vFboTU7Yn2jSTtGphHrdCEs'),
     category: 'Illustration & Digital Art',
     year: '2021–22',
     description:
@@ -194,6 +206,7 @@ export const projects = [
   },
   {
     title: 'Fine Arts',
+    drive: driveFolder('1V7ohwjPmIyyXF50yStLPDsxecePJ4ZjV'),
     category: 'Traditional Media',
     year: 'Ongoing',
     description:
@@ -206,10 +219,32 @@ export const projects = [
   },
 ];
 
-export const alsoServed = [
-  'BADEA', 'Kiara', 'Stylecraze', 'Pourhouse 7', 'Finecab', 'Kadayifzade',
-  'Hotel Kass', 'Hyaline Enviro', 'TSK', 'Shubh Samriddhi', 'Gulabo',
-  'Star Talk Show', 'Low-Poly Mustang', 'Futuristic Type Concepts',
+// ── Complete works grid ──────────────────────────────────────
+// Every remaining project/client. Each tile links to its Google
+// Drive folder. To add one:
+//   { name: 'Client', category: 'What it was',
+//     drive: driveFolder('FOLDER_ID'), thumb: driveImg('IMAGE_FILE_ID') }
+// FOLDER_ID = the part after /folders/ in the Drive URL.
+// IMAGE_FILE_ID = the part after /d/ in the image's Drive URL.
+// `thumb` is optional — without it the tile shows a monogram.
+export const archive = [
+  { name: 'BADEA', category: 'Event Branding', drive: driveFolder('1DRpcpsET_kpEvK4YbcsM2DooeYRCbguo'), thumb: driveImg('1MGsfsw3GtIaTZG9Zi6Ujqz074R8c-vNX', 400) },
+  { name: 'Kiara', category: 'Social Media & Carousels', drive: driveFolder('1T0qqlt81G1-wvaN7ah5AWr869z_lZjP5'), thumb: driveImg('1k98rmfFsszjU1kpuPkINMuYPca7_1DZI', 400) },
+  { name: 'Stylecraze', category: 'Infographics', drive: driveFolder('1luO6xOC-7cLtEAJESMiRLovIf8jjXLY2'), thumb: driveImg('1xV5PxKUejtCzWYshX6AhT6PA95tvWtGA', 400) },
+  { name: 'Pourhouse 7', category: 'Social Media Design', drive: driveFolder('1Bx0R_xy-ZnbO3lToc6BvwRHb_WM8RgcS'), thumb: driveImg('14f8nvtrTDK5HCTW1h8b0_309lQkxt_ln', 400) },
+  { name: 'Finecab', category: 'Brand Content', drive: driveFolder('1Tjqs8m8JTlrjFqrnwMGkU0D4hK1jkeJx') },
+  { name: 'Kadayifzade', category: 'Social Media & Campaign', drive: driveFolder('1DNKEMY0h4NZkPBr_vTFFxuWecpp77MB6'), thumb: driveImg('1akAxTIYMbVrZdiYxR-KSRCUf4vcWfRpW', 400) },
+  { name: 'Hotel Kass', category: 'Hospitality Social Media', drive: driveFolder('1S40Z8py32TS8naCf0BzEemk-nv6MR0oY'), thumb: driveImg('141zAUSXuByxIG16oGwdugASD-UrfgyGh', 400) },
+  { name: 'Hyaline Enviro', category: 'Brand Design', drive: driveFolder('1iPCQOaEyHBl6Zv8srz3N-Lv8zQzm_cCK') },
+  { name: 'TSK', category: 'Social Media Design', drive: driveFolder('1xfF2-UiTaI-JalBepXm36i82XKqCxCcC'), thumb: driveImg('16IqD3HdCn-dCMgwgKMEfNy7xFJgUF51z', 400) },
+  { name: 'Shubh Samriddhi', category: 'Festive & Devotional Creatives', drive: driveFolder('1PCeZ1B06i6uz70pT45sIsaqp0tIlvkHe'), thumb: driveImg('1iulzgrH5L3puPyFZzG9Xzo6QBlOeiN83', 400) },
+  { name: 'Gulabo', category: 'Brand Creatives', drive: driveFolder('1ksJqR120XO2AFhN1JALELsgkVst5VW4B'), thumb: driveImg('1YW5XOUFNnIsThsW1ru4I7_vl5goEBgVC', 400) },
+  { name: 'Star Talk Show', category: 'Show Branding', drive: driveFolder('1oE9leuWJ4VzDxCNqqUtQVx6ZC8gC9YT4') },
+  { name: 'Low-Poly Mustang', category: '3D Modeling', drive: driveFolder('1IIGsCC-5PVgr7tuq7GJTRqZswJcxKpYk'), thumb: driveImg('1CQR3rtXwGjJ1eH4V2koLUJTP12EmPtiD', 400) },
+  { name: 'Park Concept', category: '3D Environment', drive: driveFolder('1IIGsCC-5PVgr7tuq7GJTRqZswJcxKpYk'), thumb: driveImg('1k5GHXPMhxCcdSqUO6e6F7TEKM2MhQAH4', 400) },
+  { name: 'Futuristic Type Concept', category: '3D Typography', drive: driveFolder('1IIGsCC-5PVgr7tuq7GJTRqZswJcxKpYk'), thumb: driveImg('14NiM4uE4cV5gtBo-BNpaR3NUVLGwIJQv', 400) },
+  { name: 'Motion Design Reels', category: 'Motion & Product Reels', drive: driveFolder('1Y-dxUf2mOXtyv8JDvCFj8lFTdWbs2iNT') },
+  { name: 'Website Design', category: 'Web Design Collection', drive: driveFolder('15CcMJZlu7QjLNl82BxFV29lvKt-GcpAL'), thumb: driveImg('1Vl1v4LrnhU2k1naVIiRRHZnxRUlE4W9J', 400) },
 ];
 
 export const arsenal = [

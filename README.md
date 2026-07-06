@@ -1,5 +1,9 @@
 # Humes Ali — The Knight's Tale
 
+> **Editing the site yourself?** Read **[HOW-TO-EDIT.md](HOW-TO-EDIT.md)** —
+> plain-English instructions for changing text, projects, fonts and colors
+> straight from github.com (auto-deploys on every commit).
+
 Interactive 3D portfolio of **Syed Humes Ali**, Senior Creative Designer & 3D Artist (Dubai).
 
 A scroll-driven WebGL storytelling experience: a dark sentinel knight stands before an

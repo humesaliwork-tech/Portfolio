@@ -89,8 +89,9 @@
         <div class="gallery-track" id="gallery-track"></div>
       </div>
       <div class="also-served chapter-body">
-        <p class="chapter-eyebrow reveal">Also served</p>
-        <p class="also-list reveal" id="also-list"></p>
+        <p class="chapter-eyebrow reveal">The complete works</p>
+        <p class="chapter-text reveal">Every campaign has its own vault — open any of them on Drive.</p>
+        <div class="archive-grid reveal" id="archive-grid"></div>
       </div>
     </section>
 
@@ -131,6 +132,19 @@
     </section>
 
   </main>
+
+  <!-- ══ Project detail view ══ -->
+  <div id="project-view" class="pview" hidden>
+    <div class="pview-backdrop" data-close></div>
+    <article class="pview-panel" role="dialog" aria-modal="true">
+      <button class="pview-close" data-close aria-label="Close">✕</button>
+      <p class="chapter-eyebrow" id="pv-cat"></p>
+      <h2 class="pview-title" id="pv-title"></h2>
+      <p class="pview-desc" id="pv-desc"></p>
+      <div class="pview-actions" id="pv-actions"></div>
+      <div class="pview-images" id="pv-images"></div>
+    </article>
+  </div>
 
   <script type="module" src="/src/main.js"></script>
 </body>

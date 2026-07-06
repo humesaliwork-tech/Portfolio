@@ -1,5 +1,5 @@
 import {
-  profile, chapters, experience, projects, alsoServed,
+  profile, chapters, experience, projects, archive,
   arsenal, honors, education,
 } from './data/content.js';
 
@@ -39,7 +39,7 @@ export function populate() {
     xp.appendChild(li);
   }
 
-  // gallery
+  // gallery — every card opens the project detail view
   const track = document.getElementById('gallery-track');
   projects.forEach((p, i) => {
     const card = el('article', 'work-card');
@@ -52,6 +52,7 @@ export function populate() {
     img.referrerPolicy = 'no-referrer';
     img.onload = () => img.classList.add('is-loaded');
     frame.appendChild(img);
+    frame.appendChild(el('span', 'work-open', 'View project ↗'));
 
     if (p.images.length > 1) {
       const thumbs = el('div', 'work-thumbs');
@@ -63,7 +64,8 @@ export function populate() {
         ti.loading = 'lazy';
         ti.referrerPolicy = 'no-referrer';
         b.appendChild(ti);
-        b.addEventListener('click', () => {
+        b.addEventListener('click', (e) => {
+          e.stopPropagation();
           img.classList.remove('is-loaded');
           img.src = src;
           thumbs.querySelectorAll('button').forEach((x) => x.classList.remove('is-active'));
@@ -81,13 +83,35 @@ export function populate() {
     meta.appendChild(el('span', 'work-cat', `${p.category}<br>${p.year}`));
     card.appendChild(meta);
     card.appendChild(el('p', 'work-desc', p.description));
+    card.addEventListener('click', () => openProject(p));
     track.appendChild(card);
   });
 
-  // also served
-  document.getElementById('also-list').innerHTML = alsoServed
-    .map((n) => `<span>${n}</span>`)
-    .join('<span class="sep">✦</span>');
+  // complete works grid — every tile opens its Drive folder
+  const grid = document.getElementById('archive-grid');
+  for (const c of archive) {
+    const a = el('a', 'archive-tile');
+    a.href = c.drive;
+    a.target = '_blank';
+    a.rel = 'noreferrer';
+    const visual = el('div', 'archive-thumb');
+    if (c.thumb) {
+      const im = el('img');
+      im.src = c.thumb;
+      im.alt = c.name;
+      im.loading = 'lazy';
+      im.referrerPolicy = 'no-referrer';
+      visual.appendChild(im);
+    } else {
+      visual.appendChild(el('span', 'archive-mono', c.name[0]));
+    }
+    a.appendChild(visual);
+    const meta = el('div', 'archive-meta');
+    meta.appendChild(el('strong', '', c.name));
+    meta.appendChild(el('span', '', c.category));
+    a.appendChild(meta);
+    grid.appendChild(a);
+  }
 
   // arsenal
   const groups = document.getElementById('arsenal-groups');
@@ -139,4 +163,58 @@ export function populate() {
 
   document.getElementById('colophon-left').textContent =
     `© ${new Date().getFullYear()} ${profile.fullName}`;
+}
+
+// ── project detail view ──────────────────────────────────────
+let lenisRef = null;
+export function wireProjects(lenis) {
+  lenisRef = lenis;
+  const view = document.getElementById('project-view');
+  view.addEventListener('click', (e) => {
+    if (e.target.closest('[data-close]')) closeProject();
+  });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !view.hidden) closeProject();
+  });
+}
+
+function openProject(p) {
+  const view = document.getElementById('project-view');
+  document.getElementById('pv-cat').textContent = `${p.category} — ${p.year}`;
+  document.getElementById('pv-title').textContent = p.title;
+  document.getElementById('pv-desc').textContent = p.description;
+
+  const actions = document.getElementById('pv-actions');
+  actions.innerHTML = '';
+  if (p.drive) {
+    const a = document.createElement('a');
+    a.className = 'pview-btn';
+    a.href = p.drive;
+    a.target = '_blank';
+    a.rel = 'noreferrer';
+    a.textContent = 'Full project folder on Drive ↗';
+    actions.appendChild(a);
+  }
+
+  const imgs = document.getElementById('pv-images');
+  imgs.innerHTML = '';
+  for (const src of p.images) {
+    const im = document.createElement('img');
+    im.src = src;
+    im.alt = p.title;
+    im.loading = 'lazy';
+    im.referrerPolicy = 'no-referrer';
+    imgs.appendChild(im);
+  }
+
+  view.hidden = false;
+  document.body.style.overflow = 'hidden';
+  lenisRef?.stop();
+  view.querySelector('.pview-panel').scrollTop = 0;
+}
+
+function closeProject() {
+  document.getElementById('project-view').hidden = true;
+  document.body.style.overflow = '';
+  lenisRef?.start();
 }

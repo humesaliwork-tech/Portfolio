@@ -11,7 +11,7 @@ import gsap from 'gsap';
 import { World } from './scene/World.js';
 import { KeyartStage } from './scene/Keyart.js';
 import { Particles } from './scene/Particles.js';
-import { populate } from './populate.js';
+import { populate, wireProjects } from './populate.js';
 import { buildStory } from './story.js';
 
 populate();
@@ -46,7 +46,8 @@ world.add(particles.points);
 world.onTick((t) => particles.tick(t));
 
 world.start();
-buildStory(world, stage);
+const { lenis } = buildStory(world, stage);
+wireProjects(lenis);
 if (import.meta.env.DEV || location.search.includes('debug')) {
   window.__stage = stage;
   window.__world = world;

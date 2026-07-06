@@ -47,6 +47,10 @@ world.onTick((t) => particles.tick(t));
 
 world.start();
 buildStory(world, stage);
+if (import.meta.env.DEV || location.search.includes('debug')) {
+  window.__stage = stage;
+  window.__world = world;
+}
 
 // ── loader → intro ───────────────────────────────────────────
 const num = document.getElementById('loader-num');

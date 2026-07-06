@@ -87,6 +87,8 @@ class KeyartPlane {
     this.mesh.renderOrder = index;
     this.mesh.visible = index === 0;
     this.imgAspect = 16 / 9;
+    // portrait cover-crops land deep inside the bright portal — temper it
+    this.mobileDim = matchMedia('(max-width: 760px)').matches ? 0.82 : 1;
     world.add(this.mesh);
 
     this.ready = this._load(sources);
@@ -126,7 +128,7 @@ class KeyartPlane {
     u.uTime.value = t;
     u.uScale.value = s.scale;
     u.uOffset.value.set(s.offsetX, s.offsetY);
-    u.uDim.value = s.dim;
+    u.uDim.value = s.dim * this.mobileDim;
     u.uOpacity.value = s.opacity;
     u.uParallax.value.set(pointer.x * 0.036, pointer.y * 0.022);
     this.mesh.visible = s.opacity > 0.004 && !!u.uTex.value;

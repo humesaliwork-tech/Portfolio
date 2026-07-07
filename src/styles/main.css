@@ -7,8 +7,8 @@
   --ink: #030807;
   --ink-soft: #071310;
   --bone: #e8f5ee;
-  --bone-dim: rgba(232, 245, 238, 0.55);
-  --bone-faint: rgba(232, 245, 238, 0.28);
+  --bone-dim: rgba(232, 245, 238, 0.78);
+  --bone-faint: rgba(232, 245, 238, 0.5);
   --ember: #37ffa8;
   --ember-deep: #0f7a4d;
   --ember-glow: rgba(55, 255, 168, 0.45);
@@ -161,7 +161,7 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
   display: flex;
   align-items: baseline;
   gap: 0.6rem;
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--bone-faint);
@@ -169,7 +169,10 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 #chapter-numeral { font-family: var(--font-display); font-weight: 700; color: var(--ember); font-size: 0.78rem; }
 
 .head-cta {
-  font-size: 0.68rem;
+  font-size: 0.7rem;
+  font-family: var(--font-ui);
+  background: none;
+  cursor: pointer;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--bone-dim);
@@ -248,7 +251,7 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
   flex-direction: column;
   align-items: center;
   gap: 0.7rem;
-  font-size: 0.62rem;
+  font-size: 0.7rem;
   letter-spacing: 0.34em;
   text-transform: uppercase;
   color: var(--bone-dim);
@@ -283,7 +286,7 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 .chapter-body { max-width: 1100px; }
 
 .chapter-eyebrow {
-  font-size: 0.66rem;
+  font-size: 0.74rem;
   letter-spacing: 0.42em;
   text-transform: uppercase;
   color: var(--ember);
@@ -310,12 +313,13 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 
 .chapter-text {
   font-family: var(--font-serif);
-  font-size: clamp(1.15rem, 2vw, 1.45rem);
-  font-weight: 300;
+  font-size: clamp(1.3rem, 2.3vw, 1.65rem);
+  font-weight: 500;
   line-height: 1.75;
-  color: var(--bone-dim);
+  color: var(--bone);
   max-width: 34em;
   margin-top: 2.4rem;
+  text-shadow: 0 1px 14px rgba(2, 8, 6, 0.8);
 }
 
 /* reveal primitives (animated by GSAP) */
@@ -342,8 +346,8 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 .hero-title {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(3.4rem, 12vw, 9.5rem);
-  line-height: 0.94;
+  font-size: clamp(2.6rem, 9.5vw, 7.6rem);
+  line-height: 0.98;
   letter-spacing: 0.01em;
   text-transform: uppercase;
   display: flex;
@@ -353,7 +357,7 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 
 .hero-sub {
   margin-top: 2rem;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   letter-spacing: 0.44em;
   text-transform: uppercase;
   color: var(--bone);
@@ -387,7 +391,7 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 .xp-period {
   font-family: var(--font-ui);
   font-weight: 500;
-  font-size: 0.74rem;
+  font-size: 0.8rem;
   letter-spacing: 0.16em;
   color: var(--ember);
   padding-top: 0.45rem;
@@ -408,7 +412,7 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 }
 .xp-deeds {
   margin-top: 1rem;
-  font-size: 0.92rem;
+  font-size: 1rem;
   color: var(--bone-dim);
   max-width: 46em;
 }
@@ -464,6 +468,16 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 }
 .work-frame img.is-loaded { opacity: 1; }
 .work-card:hover .work-frame img { transform: scale(1.045); }
+.work-mono {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 5rem;
+  color: var(--ember-deep);
+}
 .work-frame::after {
   content: '';
   position: absolute;
@@ -499,7 +513,7 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 .work-index {
   font-family: var(--font-ui);
   font-weight: 500;
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   color: var(--ember);
   letter-spacing: 0.2em;
 }
@@ -511,7 +525,7 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 }
 .work-cat {
   margin-left: auto;
-  font-size: 0.62rem;
+  font-size: 0.68rem;
   letter-spacing: 0.26em;
   text-transform: uppercase;
   color: var(--bone-faint);
@@ -519,7 +533,7 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
 }
 .work-desc {
   font-family: var(--font-serif);
-  font-size: 1.02rem;
+  font-size: 1.15rem;
   color: var(--bone-dim);
   max-width: 40em;
 }
@@ -600,7 +614,7 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
   letter-spacing: 0.02em;
 }
 .archive-meta span {
-  font-size: 0.64rem;
+  font-size: 0.7rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--bone-faint);
@@ -760,7 +774,7 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
   font-size: 0.98rem;
   margin-top: 0.7rem;
 }
-.honor-detail { font-size: 0.85rem; color: var(--bone-dim); margin-top: 1rem; }
+.honor-detail { font-size: 0.95rem; color: var(--bone-dim); margin-top: 1rem; }
 
 .education {
   margin-top: 4rem;
@@ -822,7 +836,7 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
   justify-content: center;
   gap: 1rem 2.6rem;
   margin-top: 2.6rem;
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--bone-dim);
@@ -837,16 +851,23 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  font-size: 0.62rem;
+  font-size: 0.7rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--bone-faint);
 }
 
 /* ── Responsive ───────────────────────────────────────────── */
+#sound-toggle.is-suggested {
+  color: var(--ember);
+  border-color: var(--ember-deep);
+  animation: sigil-pulse 2s ease-in-out 3;
+}
+
 @media (max-width: 760px) {
   .chapter { padding-top: 14vh; padding-bottom: 14vh; }
   .head-cta { display: none; }
+  #sound-toggle { display: inline-block; }
   .chapter-tag { display: none; }
   .rail { display: none; }
   .xp-item { grid-template-columns: 1fr; gap: 0.6rem; }

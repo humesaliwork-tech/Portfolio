@@ -3,7 +3,7 @@ import '@fontsource/syne/700.css';
 import '@fontsource/syne/800.css';
 import '@fontsource/space-grotesk/400.css';
 import '@fontsource/space-grotesk/500.css';
-import '@fontsource/cormorant-garamond/300.css';
+import '@fontsource/cormorant-garamond/500.css';
 import '@fontsource/cormorant-garamond/500-italic.css';
 import './styles/main.css';
 
@@ -13,6 +13,7 @@ import { KeyartStage } from './scene/Keyart.js';
 import { Particles } from './scene/Particles.js';
 import { populate, wireProjects } from './populate.js';
 import { buildStory } from './story.js';
+import { wireSound } from './audio.js';
 
 populate();
 
@@ -48,6 +49,7 @@ world.onTick((t) => particles.tick(t));
 world.start();
 const { lenis } = buildStory(world, stage);
 wireProjects(lenis);
+wireSound();
 if (import.meta.env.DEV || location.search.includes('debug')) {
   window.__stage = stage;
   window.__world = world;

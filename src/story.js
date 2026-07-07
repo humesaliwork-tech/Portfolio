@@ -2,6 +2,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import { chapters } from './data/content.js';
+import { bard } from './audio.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -141,6 +142,7 @@ export function buildStory(world, stage) {
         dots.forEach((d, j) => d.classList.toggle('is-active', i === j));
         numeral.textContent = ch.numeral;
         label.textContent = ch.label;
+        bard.thud();
       },
     });
   });

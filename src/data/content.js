@@ -12,8 +12,11 @@ export const driveImg = (id, w = 1600) =>
 export const driveFolder = (id) =>
   `https://drive.google.com/drive/folders/${id}`;
 
+export const driveFile = (id) =>
+  `https://drive.google.com/file/d/${id}/view`;
+
 export const profile = {
-  name: 'Humes Ali',
+  name: 'Syed Humes Ali',
   fullName: 'Syed Humes Ali',
   title: 'Senior Creative Designer & 3D Artist',
   location: 'Sports City, Dubai — United Arab Emirates',
@@ -87,25 +90,45 @@ export const experience = [
   },
 ];
 
+// ── Featured projects (the big gallery, in display order) ────
+// Each project can have:
+//   drive: link shown as "Full project folder on Drive ↗"
+//   video: link shown as "Watch motion & video ↗"
+//   images: [] is allowed — the card shows a monogram until you add some
 export const projects = [
   {
     title: 'DIFC Ignyte',
-    drive: driveFolder('14NAg1scP2qbyJQwaCjbEMNItV-hfq7e3'),
     category: 'Brand & Event Design',
     year: '2024–26',
+    drive: driveFolder('14NAg1scP2qbyJQwaCjbEMNItV-hfq7e3'),
+    video: driveFolder('1MASVCwvQEWjMYBgfkeQpdfBS8kX6YaGB'),
     description:
       'Flagship innovation initiative of Dubai International Financial Centre. Event branding, digital campaigns, merch and experience design for the city’s start-up ecosystem.',
     images: [
       driveImg('1KrWoZEncrmuWu0YXtSTwywOqKY-8YEz_'),
       driveImg('1Zf62pode0z0nLoXiMKyIKpJdk-eUnCz9'),
       driveImg('1u92_M69PVnb0XCDzd5hoUbKwNvTJchuq'),
+      driveImg('1ycC5CtlvbfQ4hnpwjthzP7Qi8PIODnSe'),
+      driveImg('1Nyok0Q1dEs7uQU-_cvInNxTaOxK79_gn'),
+    ],
+  },
+  {
+    title: 'Kadayifzade',
+    category: 'Social Media & Campaign',
+    year: '2024',
+    drive: driveFolder('1DNKEMY0h4NZkPBr_vTFFxuWecpp77MB6'),
+    description:
+      'Appetite-first social media and campaign design for the Turkish dessert house — content that made künefe irresistible online.',
+    images: [
+      driveImg('1akAxTIYMbVrZdiYxR-KSRCUf4vcWfRpW'),
+      driveImg('19OdaLQaTU_f7JFWKp9C0YfLVBKzxKzDD'),
     ],
   },
   {
     title: '21st Asian U20 Athletics Championship',
-    drive: driveFolder('11UzFMPD42_CMnvrPSZLPFW5wBqMBhOLr'),
     category: 'Event Branding · Website · Campaign',
     year: '2024',
+    drive: driveFolder('11UzFMPD42_CMnvrPSZLPFW5wBqMBhOLr'),
     description:
       'Full identity, website and campaign system for the continental championship in Dubai — honored by the UAE Athletics Federation and Dubai Police.',
     images: [
@@ -116,9 +139,9 @@ export const projects = [
   },
   {
     title: '13th Regional IP Crime Conference',
-    drive: driveFolder('1SnwYCsMPBCou7zQWjz263SToUMB1SqP0'),
     category: 'Event Branding · Website · Print',
     year: '2024',
+    drive: driveFolder('1SnwYCsMPBCou7zQWjz263SToUMB1SqP0'),
     description:
       'Branding, website and campaign material for the EIPAC conference on combating IP crime — awarded an Appreciation Award by Dubai Police.',
     images: [
@@ -128,23 +151,84 @@ export const projects = [
     ],
   },
   {
-    title: 'BMW E30 M3',
-    drive: driveFolder('1IIGsCC-5PVgr7tuq7GJTRqZswJcxKpYk'),
-    category: '3D Modeling & Animation',
+    title: 'Gulabo',
+    category: 'Brand Creatives',
     year: '2023',
+    drive: driveFolder('1ksJqR120XO2AFhN1JALELsgkVst5VW4B'),
     description:
-      'Full-CG build of the legendary E30 M3 — modeled, textured, lit and animated as a cinematic automotive short.',
+      'Vivid brand creatives and campaign visuals for Gulabo — color-rich storytelling for a bold identity.',
     images: [
-      driveImg('1qrzYcoQSn5Ve_i9H5ylKuy3BR7JNbpuN'),
-      driveImg('1C26IBu1f8lOr3RG7bhp8nFs2mJhHzNsa'),
-      driveImg('1fl-Gw4ZNgVpbpiQYMFwErRHTixxeCaXn'),
+      driveImg('1YW5XOUFNnIsThsW1ru4I7_vl5goEBgVC'),
+    ],
+  },
+  {
+    title: 'La Cima Productions',
+    category: 'Production Studio — Web & Brand',
+    year: '2023–24',
+    drive: driveFolder('1PvqfR1PLtekGSKGzV64S3qTShoa9W80O'),
+    video: driveFolder('1Y-dxUf2mOXtyv8JDvCFj8lFTdWbs2iNT'),
+    description:
+      'Website and brand design for the production studio behind Dubai’s biggest event campaigns — my home base as Creative Manager.',
+    images: [
+      driveImg('1lbS0TVXb7xAMtBTRleLJEegoMcGFtQVx'),
+      driveImg('1UI2CKnvBCjnF2hMb9bgP1v8p1nKypN5B'),
+      driveImg('1hxn5gZuI-1El-h71FaM1HzRDUbeItC7h'),
+    ],
+  },
+  {
+    title: 'BADEA Bank',
+    category: 'Event Branding',
+    year: '2024',
+    drive: driveFolder('1DRpcpsET_kpEvK4YbcsM2DooeYRCbguo'),
+    description:
+      'Event branding and environment design for the Arab Bank for Economic Development in Africa.',
+    images: [
+      driveImg('1MGsfsw3GtIaTZG9Zi6Ujqz074R8c-vNX'),
+      driveImg('1NnbnQbCygIzcf6HuTEXKVTACBCY3MX0b'),
+      driveImg('1W_7_hW3H57v1x9c8jUYPnxuH6TBqg4E6'),
+    ],
+  },
+  {
+    title: 'Shubh Samriddhi',
+    category: 'Festive & Devotional Creatives',
+    year: '2023',
+    drive: driveFolder('1PCeZ1B06i6uz70pT45sIsaqp0tIlvkHe'),
+    description:
+      'A year of festive, devotional and seasonal campaign creatives — from Ugadi to Holi, crafted for cultural resonance.',
+    images: [
+      driveImg('1iulzgrH5L3puPyFZzG9Xzo6QBlOeiN83'),
+      driveImg('1HLXTOR2fldrsA29_eV7AZ8_jr0tm7IwK'),
+      driveImg('1FqkvRGGtcRMTPPaM5Xl0pK5Xw00nL11M'),
+    ],
+  },
+  {
+    // No ADPIC folder exists in the Drive portfolio yet — add image
+    // file IDs below (and a drive folder link) when you upload them.
+    title: 'ADPIC',
+    category: 'Brand & Campaign Design',
+    year: '2024',
+    drive: driveFolder('1b35TljD22OrIDln24-KRYBAA25s7H9cA'),
+    description:
+      'Campaign and brand design work — full case study coming soon.',
+    images: [],
+  },
+  {
+    title: 'Pourhouse 7',
+    category: 'Social Media Design',
+    year: '2022–23',
+    drive: driveFolder('1Bx0R_xy-ZnbO3lToc6BvwRHb_WM8RgcS'),
+    description:
+      'Ongoing social media design for the Pourhouse 7 brand — daily creatives with a consistent visual voice.',
+    images: [
+      driveImg('14f8nvtrTDK5HCTW1h8b0_309lQkxt_ln'),
+      driveImg('1e-1nmYyxam6tlI2wLHBvFl7VAlY5nNtj'),
     ],
   },
   {
     title: 'Ya Halla',
-    drive: driveFolder('1N2Q8EFitn9bcXugfuafZMtH-WRziapn6'),
     category: 'Brand Identity & Campaign',
     year: '2024',
+    drive: driveFolder('1N2Q8EFitn9bcXugfuafZMtH-WRziapn6'),
     description:
       'Identity system and campaign deck — logo, color world and social language for a hospitality brand.',
     images: [
@@ -154,10 +238,24 @@ export const projects = [
     ],
   },
   {
-    title: 'Kohinoor Diamond',
+    title: 'BMW E30 M3',
+    category: '3D Modeling & Animation',
+    year: '2023',
     drive: driveFolder('1IIGsCC-5PVgr7tuq7GJTRqZswJcxKpYk'),
+    video: driveFile('1sc-erQdaA4falEOfxyVvUBsmgtm9UKPu'),
+    description:
+      'Full-CG build of the legendary E30 M3 — modeled, textured, lit and animated as a cinematic automotive short.',
+    images: [
+      driveImg('1qrzYcoQSn5Ve_i9H5ylKuy3BR7JNbpuN'),
+      driveImg('1C26IBu1f8lOr3RG7bhp8nFs2mJhHzNsa'),
+      driveImg('1fl-Gw4ZNgVpbpiQYMFwErRHTixxeCaXn'),
+    ],
+  },
+  {
+    title: 'Kohinoor Diamond',
     category: '3D Art & Lighting',
     year: '2022',
+    drive: driveFolder('1IIGsCC-5PVgr7tuq7GJTRqZswJcxKpYk'),
     description:
       'A study of light through the world’s most storied gem — caustics, dispersion and darkness.',
     images: [
@@ -167,9 +265,9 @@ export const projects = [
   },
   {
     title: 'Iron Man — Light Study',
-    drive: driveFolder('1IIGsCC-5PVgr7tuq7GJTRqZswJcxKpYk'),
     category: '3D Lighting & Look-Dev',
     year: '2022',
+    drive: driveFolder('1IIGsCC-5PVgr7tuq7GJTRqZswJcxKpYk'),
     description:
       'Cinematic lighting scenarios over a hero model — rim, mood and metal.',
     images: [
@@ -180,9 +278,9 @@ export const projects = [
   },
   {
     title: 'Throne-Room Lamp',
-    drive: driveFolder('1IIGsCC-5PVgr7tuq7GJTRqZswJcxKpYk'),
     category: '3D Product Visualization',
     year: '2021',
+    drive: driveFolder('1IIGsCC-5PVgr7tuq7GJTRqZswJcxKpYk'),
     description:
       'Game-of-Thrones-inspired table lamp — modeled and rendered through five lighting moods.',
     images: [
@@ -193,9 +291,9 @@ export const projects = [
   },
   {
     title: 'Digital Paintings',
-    drive: driveFolder('1ncmiw0fZ9vFboTU7Yn2jSTtGphHrdCEs'),
     category: 'Illustration & Digital Art',
     year: '2021–22',
+    drive: driveFolder('1ncmiw0fZ9vFboTU7Yn2jSTtGphHrdCEs'),
     description:
       'Kratos, Wolverine, Killmonger, Bumblebee, Neeraj Chopra — character studies painted stroke by stroke.',
     images: [
@@ -206,9 +304,9 @@ export const projects = [
   },
   {
     title: 'Fine Arts',
-    drive: driveFolder('1V7ohwjPmIyyXF50yStLPDsxecePJ4ZjV'),
     category: 'Traditional Media',
     year: 'Ongoing',
+    drive: driveFolder('1V7ohwjPmIyyXF50yStLPDsxecePJ4ZjV'),
     description:
       'Where it all began — graphite, ink and paint on paper.',
     images: [
@@ -228,17 +326,12 @@ export const projects = [
 // IMAGE_FILE_ID = the part after /d/ in the image's Drive URL.
 // `thumb` is optional — without it the tile shows a monogram.
 export const archive = [
-  { name: 'BADEA', category: 'Event Branding', drive: driveFolder('1DRpcpsET_kpEvK4YbcsM2DooeYRCbguo'), thumb: driveImg('1MGsfsw3GtIaTZG9Zi6Ujqz074R8c-vNX', 400) },
   { name: 'Kiara', category: 'Social Media & Carousels', drive: driveFolder('1T0qqlt81G1-wvaN7ah5AWr869z_lZjP5'), thumb: driveImg('1k98rmfFsszjU1kpuPkINMuYPca7_1DZI', 400) },
   { name: 'Stylecraze', category: 'Infographics', drive: driveFolder('1luO6xOC-7cLtEAJESMiRLovIf8jjXLY2'), thumb: driveImg('1xV5PxKUejtCzWYshX6AhT6PA95tvWtGA', 400) },
-  { name: 'Pourhouse 7', category: 'Social Media Design', drive: driveFolder('1Bx0R_xy-ZnbO3lToc6BvwRHb_WM8RgcS'), thumb: driveImg('14f8nvtrTDK5HCTW1h8b0_309lQkxt_ln', 400) },
   { name: 'Finecab', category: 'Brand Content', drive: driveFolder('1Tjqs8m8JTlrjFqrnwMGkU0D4hK1jkeJx') },
-  { name: 'Kadayifzade', category: 'Social Media & Campaign', drive: driveFolder('1DNKEMY0h4NZkPBr_vTFFxuWecpp77MB6'), thumb: driveImg('1akAxTIYMbVrZdiYxR-KSRCUf4vcWfRpW', 400) },
   { name: 'Hotel Kass', category: 'Hospitality Social Media', drive: driveFolder('1S40Z8py32TS8naCf0BzEemk-nv6MR0oY'), thumb: driveImg('141zAUSXuByxIG16oGwdugASD-UrfgyGh', 400) },
   { name: 'Hyaline Enviro', category: 'Brand Design', drive: driveFolder('1iPCQOaEyHBl6Zv8srz3N-Lv8zQzm_cCK') },
   { name: 'TSK', category: 'Social Media Design', drive: driveFolder('1xfF2-UiTaI-JalBepXm36i82XKqCxCcC'), thumb: driveImg('16IqD3HdCn-dCMgwgKMEfNy7xFJgUF51z', 400) },
-  { name: 'Shubh Samriddhi', category: 'Festive & Devotional Creatives', drive: driveFolder('1PCeZ1B06i6uz70pT45sIsaqp0tIlvkHe'), thumb: driveImg('1iulzgrH5L3puPyFZzG9Xzo6QBlOeiN83', 400) },
-  { name: 'Gulabo', category: 'Brand Creatives', drive: driveFolder('1ksJqR120XO2AFhN1JALELsgkVst5VW4B'), thumb: driveImg('1YW5XOUFNnIsThsW1ru4I7_vl5goEBgVC', 400) },
   { name: 'Star Talk Show', category: 'Show Branding', drive: driveFolder('1oE9leuWJ4VzDxCNqqUtQVx6ZC8gC9YT4') },
   { name: 'Low-Poly Mustang', category: '3D Modeling', drive: driveFolder('1IIGsCC-5PVgr7tuq7GJTRqZswJcxKpYk'), thumb: driveImg('1CQR3rtXwGjJ1eH4V2koLUJTP12EmPtiD', 400) },
   { name: 'Park Concept', category: '3D Environment', drive: driveFolder('1IIGsCC-5PVgr7tuq7GJTRqZswJcxKpYk'), thumb: driveImg('1k5GHXPMhxCcdSqUO6e6F7TEKM2MhQAH4', 400) },

@@ -114,7 +114,18 @@ In **`src/story.js`** find the `scenes` table — one line per chapter:
 
 `img` = which artwork (0–3) · `scale` = zoom · `ox/oy` = pan · `dim` = brightness.
 
-## 6. Working on your own computer (optional)
+## 6. Music & sounds
+
+The ♪ toggle in the header plays a synthesized dark-fantasy ambience
+(drone, wind, war drums) plus UI click sounds — no audio file needed.
+
+**To use a real soundtrack instead** (e.g. an epic instrumental you have a
+license for): upload the file to this repo as **`public/audio/theme.mp3`**.
+The site automatically plays it (looped) instead of the synthesized
+ambience. Keep it under ~5 MB for fast loading. Royalty-free epic music:
+pixabay.com/music, uppbeat.io or artlist.io.
+
+## 7. Working on your own computer (optional)
 
 Only needed for bigger changes. Install [Node.js](https://nodejs.org), then:
 
@@ -127,7 +138,7 @@ npm run dev        # live preview at http://localhost:5173
 
 Push your commits and the site deploys automatically.
 
-## 7. Fixing bugs later
+## 8. Fixing bugs later
 
 Any AI coding assistant (Claude, ChatGPT, Copilot…) can maintain this repo —
 it is a standard Vite + Three.js + GSAP project. Point it at this file and

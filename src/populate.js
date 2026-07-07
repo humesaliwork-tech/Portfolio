@@ -2,6 +2,7 @@ import {
   profile, chapters, experience, projects, archive,
   arsenal, honors, education,
 } from './data/content.js';
+import { bard } from './audio.js';
 
 const el = (tag, cls, html) => {
   const n = document.createElement(tag);
@@ -46,12 +47,16 @@ export function populate() {
     const frame = el('div', 'work-frame');
 
     const img = el('img');
-    img.src = p.images[0];
-    img.alt = p.title;
-    img.loading = i < 2 ? 'eager' : 'lazy';
-    img.referrerPolicy = 'no-referrer';
-    img.onload = () => img.classList.add('is-loaded');
-    frame.appendChild(img);
+    if (p.images.length) {
+      img.src = p.images[0];
+      img.alt = p.title;
+      img.loading = i < 2 ? 'eager' : 'lazy';
+      img.referrerPolicy = 'no-referrer';
+      img.onload = () => img.classList.add('is-loaded');
+      frame.appendChild(img);
+    } else {
+      frame.appendChild(el('span', 'work-mono', p.title[0]));
+    }
     frame.appendChild(el('span', 'work-open', 'View project ↗'));
 
     if (p.images.length > 1) {
@@ -186,15 +191,17 @@ function openProject(p) {
 
   const actions = document.getElementById('pv-actions');
   actions.innerHTML = '';
-  if (p.drive) {
+  const addBtn = (href, label) => {
     const a = document.createElement('a');
     a.className = 'pview-btn';
-    a.href = p.drive;
+    a.href = href;
     a.target = '_blank';
     a.rel = 'noreferrer';
-    a.textContent = 'Full project folder on Drive ↗';
+    a.textContent = label;
     actions.appendChild(a);
-  }
+  };
+  if (p.drive) addBtn(p.drive, 'Full project folder on Drive ↗');
+  if (p.video) addBtn(p.video, 'Watch motion & video ↗');
 
   const imgs = document.getElementById('pv-images');
   imgs.innerHTML = '';
@@ -209,6 +216,7 @@ function openProject(p) {
 
   view.hidden = false;
   document.body.style.overflow = 'hidden';
+  bard.openHit();
   lenisRef?.stop();
   view.querySelector('.pview-panel').scrollTop = 0;
 }

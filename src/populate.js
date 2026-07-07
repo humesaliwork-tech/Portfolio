@@ -1,8 +1,7 @@
 import {
-  profile, chapters, experience, projects, archive,
+  profile, experience, projects, archive,
   arsenal, honors, education,
 } from './data/content.js';
-import { bard } from './audio.js';
 
 const el = (tag, cls, html) => {
   const n = document.createElement(tag);
@@ -11,169 +10,124 @@ const el = (tag, cls, html) => {
   return n;
 };
 
-/** Fill every chapter with content from the data file. */
+let lenisRef = null;
+export function setLenis(l) { lenisRef = l; }
+
 export function populate() {
-  document.getElementById('calling-summary').textContent = profile.summary;
+  // marquee
+  const words = ['Brand Identity', 'Motion Design', '3D & CGI', 'Campaign', 'Web Design', 'Illustration', 'Art Direction'];
+  const chunk = words.map((w) => `${w}<span class="marquee-star">✦</span>`).join('');
+  const track = document.getElementById('marquee-track');
+  track.innerHTML = `<span>${chunk}</span><span>${chunk}</span><span>${chunk}</span>`;
 
-  // rail
-  const rail = document.querySelector('.rail');
-  for (const ch of chapters) {
-    const b = el('button', 'rail-dot');
-    b.dataset.target = ch.id;
-    b.setAttribute('aria-label', ch.label);
-    b.appendChild(el('span', 'rail-tip', ch.numeral ? `${ch.numeral} · ${ch.label}` : ch.label));
-    rail.appendChild(b);
-  }
-
-  // experience
-  const xp = document.getElementById('xp-list');
-  for (const job of experience) {
-    const li = el('li', 'xp-item reveal');
-    li.appendChild(el('span', 'xp-period', job.period));
-    const body = el('div');
-    body.appendChild(el('h3', 'xp-role', job.role));
-    body.appendChild(el('p', 'xp-company', `${job.company} — ${job.place}`));
-    const deeds = el('div', 'xp-deeds');
-    for (const d of job.deeds) deeds.appendChild(el('p', '', d));
-    body.appendChild(deeds);
-    li.appendChild(body);
-    xp.appendChild(li);
-  }
-
-  // gallery — every card opens the project detail view
-  const track = document.getElementById('gallery-track');
+  // work list
+  document.getElementById('work-count').textContent =
+    `${String(projects.length).padStart(2, '0')} Projects`;
+  const list = document.getElementById('work-list');
   projects.forEach((p, i) => {
-    const card = el('article', 'work-card');
-    const frame = el('div', 'work-frame');
-
-    const img = el('img');
-    if (p.images.length) {
-      img.src = p.images[0];
-      img.alt = p.title;
-      img.loading = i < 2 ? 'eager' : 'lazy';
-      img.referrerPolicy = 'no-referrer';
-      img.onload = () => img.classList.add('is-loaded');
-      frame.appendChild(img);
-    } else {
-      frame.appendChild(el('span', 'work-mono', p.title[0]));
-    }
-    frame.appendChild(el('span', 'work-open', 'View project ↗'));
-
-    if (p.images.length > 1) {
-      const thumbs = el('div', 'work-thumbs');
-      p.images.forEach((src, j) => {
-        const b = el('button', j === 0 ? 'is-active' : '');
-        const ti = el('img');
-        ti.src = src.replace('w1600', 'w200');
-        ti.alt = '';
-        ti.loading = 'lazy';
-        ti.referrerPolicy = 'no-referrer';
-        b.appendChild(ti);
-        b.addEventListener('click', (e) => {
-          e.stopPropagation();
-          img.classList.remove('is-loaded');
-          img.src = src;
-          thumbs.querySelectorAll('button').forEach((x) => x.classList.remove('is-active'));
-          b.classList.add('is-active');
-        });
-        thumbs.appendChild(b);
-      });
-      frame.appendChild(thumbs);
-    }
-    card.appendChild(frame);
-
-    const meta = el('div', 'work-meta');
-    meta.appendChild(el('span', 'work-index', String(i + 1).padStart(2, '0')));
-    meta.appendChild(el('h3', 'work-title', p.title));
-    meta.appendChild(el('span', 'work-cat', `${p.category}<br>${p.year}`));
-    card.appendChild(meta);
-    card.appendChild(el('p', 'work-desc', p.description));
-    card.addEventListener('click', () => openProject(p));
-    track.appendChild(card);
+    const li = el('li', 'work-row');
+    li.dataset.img = p.images[0] || '';
+    li.setAttribute('data-cursor', 'view');
+    li.appendChild(el('span', 'work-row-idx', String(i + 1).padStart(2, '0')));
+    li.appendChild(el('span', 'work-row-title', p.title));
+    li.appendChild(el('span', 'work-row-cat', p.category));
+    li.appendChild(el('span', 'work-row-year', p.year));
+    li.addEventListener('click', () => openProject(p, i));
+    list.appendChild(li);
   });
 
-  // complete works grid — every tile opens its Drive folder
+  // archive grid
   const grid = document.getElementById('archive-grid');
   for (const c of archive) {
     const a = el('a', 'archive-tile');
-    a.href = c.drive;
-    a.target = '_blank';
-    a.rel = 'noreferrer';
-    const visual = el('div', 'archive-thumb');
+    a.href = c.drive; a.target = '_blank'; a.rel = 'noreferrer';
+    a.setAttribute('data-cursor', 'open');
+    const thumb = el('div', 'archive-thumb');
     if (c.thumb) {
       const im = el('img');
-      im.src = c.thumb;
-      im.alt = c.name;
-      im.loading = 'lazy';
-      im.referrerPolicy = 'no-referrer';
-      visual.appendChild(im);
+      im.src = c.thumb; im.alt = c.name; im.loading = 'lazy'; im.referrerPolicy = 'no-referrer';
+      thumb.appendChild(im);
     } else {
-      visual.appendChild(el('span', 'archive-mono', c.name[0]));
+      thumb.appendChild(el('span', 'archive-mono', c.name[0]));
     }
-    a.appendChild(visual);
+    a.appendChild(thumb);
     const meta = el('div', 'archive-meta');
     meta.appendChild(el('strong', '', c.name));
     meta.appendChild(el('span', '', c.category));
     a.appendChild(meta);
     grid.appendChild(a);
   }
+  const toggle = document.getElementById('archive-toggle');
+  toggle.addEventListener('click', () => {
+    const hidden = grid.hasAttribute('hidden');
+    if (hidden) grid.removeAttribute('hidden');
+    else grid.setAttribute('hidden', '');
+    toggle.querySelector('span').textContent =
+      hidden ? 'Hide the archive' : 'The complete archive';
+  });
 
-  // arsenal
-  const groups = document.getElementById('arsenal-groups');
-  for (const g of arsenal) {
-    const div = el('div', 'arsenal-group reveal');
-    div.appendChild(el('h3', '', g.group));
-    const tags = el('div', 'arsenal-tags');
-    for (const item of g.items) tags.appendChild(el('span', 'arsenal-tag', item));
-    div.appendChild(tags);
-    groups.appendChild(div);
-  }
-
-  // honors
-  const hc = document.getElementById('honor-cards');
-  for (const h of honors) {
-    const card = el('div', 'honor-card reveal');
-    card.appendChild(el('h3', '', h.title));
-    card.appendChild(el('p', 'honor-event', h.event));
-    card.appendChild(el('p', 'honor-detail', h.detail));
-    hc.appendChild(card);
-  }
-
-  // education
-  const edu = document.getElementById('education');
+  // about
+  document.getElementById('about-lead').textContent = profile.summary;
+  document.getElementById('about-location').textContent = profile.location;
+  const edu = document.getElementById('about-education');
   for (const e of education) {
-    const d = el('div');
-    d.appendChild(el('h4', '', e.period ? `Schooling · ${e.period}` : 'Certification'));
-    d.appendChild(el('p', '', `${e.degree}<br>${e.school}`));
+    const d = el('p', '', `${e.degree}${e.school ? `<br>${e.school}${e.period ? ` · ${e.period}` : ''}` : ''}`);
     edu.appendChild(d);
   }
 
-  // summon
-  const mail = document.getElementById('summon-mail');
+  // experience
+  const exp = document.getElementById('exp-list');
+  for (const job of experience) {
+    const li = el('li', 'exp-row');
+    li.appendChild(el('span', 'exp-period', job.period));
+    const mid = el('div');
+    mid.appendChild(el('h3', 'exp-role', job.role));
+    mid.appendChild(el('p', 'exp-company', `${job.company} — ${job.place}`));
+    li.appendChild(mid);
+    const deeds = el('div', 'exp-deeds');
+    for (const d of job.deeds) deeds.appendChild(el('p', '', d));
+    li.appendChild(deeds);
+    exp.appendChild(li);
+  }
+
+  // capabilities
+  const caps = document.getElementById('caps-grid');
+  for (const g of arsenal) {
+    const col = el('div', 'caps-col');
+    col.appendChild(el('h3', '', g.group === 'Craft' ? 'Disciplines' : 'Tools'));
+    const ul = el('ul');
+    for (const item of g.items) ul.appendChild(el('li', '', item));
+    col.appendChild(ul);
+    caps.appendChild(col);
+  }
+
+  // recognition
+  const rec = document.getElementById('rec-list');
+  for (const h of honors) {
+    const row = el('div', 'rec-row');
+    const left = el('div');
+    left.appendChild(el('h3', 'rec-title', h.title));
+    left.appendChild(el('p', 'rec-event', h.event));
+    row.appendChild(left);
+    row.appendChild(el('p', 'rec-detail', h.detail));
+    rec.appendChild(row);
+  }
+
+  // contact
+  const mail = document.getElementById('contact-mail');
   mail.href = `mailto:${profile.email}`;
-  mail.textContent = profile.email;
-
-  document.getElementById('summon-links').innerHTML = [
-    [`tel:${profile.phone.replace(/\s/g, '')}`, profile.phone],
+  document.getElementById('contact-mail-text').textContent = profile.email;
+  document.getElementById('contact-links').innerHTML = [
     [profile.linkedin, 'LinkedIn'],
-    [profile.drive, 'Full Portfolio Drive'],
-    [null, profile.location],
-  ]
-    .map(([href, label]) =>
-      href
-        ? `<li><a href="${href}" target="_blank" rel="noreferrer">${label}</a></li>`
-        : `<li>${label}</li>`
-    )
-    .join('');
-
-  document.getElementById('colophon-left').textContent =
+    [profile.drive, 'Portfolio Drive'],
+    [`tel:${profile.phone.replace(/\s/g, '')}`, 'Call'],
+  ].map(([href, label]) => `<li><a href="${href}" target="_blank" rel="noreferrer" data-cursor="open">${label}</a></li>`).join('');
+  document.getElementById('contact-copy').textContent =
     `© ${new Date().getFullYear()} ${profile.fullName}`;
 }
 
-// ── project detail view ──────────────────────────────────────
-let lenisRef = null;
-export function wireProjects(lenis) {
-  lenisRef = lenis;
+// ── project detail ───────────────────────────────────────────
+export function wireProjects() {
   const view = document.getElementById('project-view');
   view.addEventListener('click', (e) => {
     if (e.target.closest('[data-close]')) closeProject();
@@ -183,10 +137,12 @@ export function wireProjects(lenis) {
   });
 }
 
-function openProject(p) {
+function openProject(p, i) {
   const view = document.getElementById('project-view');
-  document.getElementById('pv-cat').textContent = `${p.category} — ${p.year}`;
+  document.getElementById('pv-idx').textContent = String(i + 1).padStart(2, '0');
   document.getElementById('pv-title').textContent = p.title;
+  document.getElementById('pv-cat').textContent = p.category;
+  document.getElementById('pv-year').textContent = p.year;
   document.getElementById('pv-desc').textContent = p.description;
 
   const actions = document.getElementById('pv-actions');
@@ -194,35 +150,35 @@ function openProject(p) {
   const addBtn = (href, label) => {
     const a = document.createElement('a');
     a.className = 'pview-btn';
-    a.href = href;
-    a.target = '_blank';
-    a.rel = 'noreferrer';
+    a.href = href; a.target = '_blank'; a.rel = 'noreferrer';
+    a.setAttribute('data-cursor', 'open');
     a.textContent = label;
     actions.appendChild(a);
   };
-  if (p.drive) addBtn(p.drive, 'Full project folder on Drive ↗');
+  if (p.drive) addBtn(p.drive, 'Full folder on Drive ↗');
   if (p.video) addBtn(p.video, 'Watch motion & video ↗');
 
   const imgs = document.getElementById('pv-images');
   imgs.innerHTML = '';
-  for (const src of p.images) {
-    const im = document.createElement('img');
-    im.src = src;
-    im.alt = p.title;
-    im.loading = 'lazy';
-    im.referrerPolicy = 'no-referrer';
-    imgs.appendChild(im);
+  if (p.images.length) {
+    for (const src of p.images) {
+      const im = document.createElement('img');
+      im.src = src; im.alt = p.title; im.loading = 'lazy'; im.referrerPolicy = 'no-referrer';
+      imgs.appendChild(im);
+    }
+  } else {
+    imgs.appendChild(el('p', 'pview-desc', 'Full case study coming soon — reach out for the deck.'));
   }
 
   view.hidden = false;
-  document.body.style.overflow = 'hidden';
-  bard.openHit();
+  document.body.classList.add('no-scroll');
   lenisRef?.stop();
   view.querySelector('.pview-panel').scrollTop = 0;
+  document.getElementById('work-preview').classList.remove('is-visible');
 }
 
 function closeProject() {
   document.getElementById('project-view').hidden = true;
-  document.body.style.overflow = '';
+  document.body.classList.remove('no-scroll');
   lenisRef?.start();
 }

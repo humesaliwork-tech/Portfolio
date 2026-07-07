@@ -19,44 +19,52 @@ live site is updated at https://humesaliwork-tech.github.io/Portfolio/
 | What | Where in the file |
 | --- | --- |
 | Name, title, phone, email, LinkedIn, bio | `profile` |
-| Chapter names (The Calling, The Arsenal…) | `chapters` |
 | Work experience entries | `experience` |
-| Featured projects (the big gallery) | `projects` |
-| Complete-works grid (small tiles) | `archive` |
-| Skills & software pills | `arsenal` |
+| Featured projects (the Selected Work list) | `projects` |
+| Complete archive (small tiles) | `archive` |
+| Skills & software | `arsenal` |
 | Awards | `honors` |
 | Education | `education` |
 
-### Add a featured project
+### Change a project's cover photo or add more images
 
-Copy an existing block inside `projects = [ ... ]` and edit it:
+Each project has an `images` list. The **first** image is the cover /
+hover preview; the rest show inside the project's detail panel.
 
 ```js
 {
-  title: 'My New Project',
-  drive: driveFolder('DRIVE_FOLDER_ID'),      // "Full folder" button
-  category: 'Brand Identity',
-  year: '2026',
-  description: 'One or two sentences about it.',
+  title: 'DIFC Ignyte',
+  category: 'Brand & Event Design',
+  year: '2024–26',
+  drive: driveFolder('DRIVE_FOLDER_ID'),   // "Full folder on Drive" button
+  video: driveFolder('DRIVE_FOLDER_ID'),   // optional "Watch motion & video" button
+  description: 'One or two sentences.',
   images: [
-    driveImg('DRIVE_IMAGE_FILE_ID'),          // first image = card cover
-    driveImg('ANOTHER_IMAGE_FILE_ID'),
+    driveImg('FIRST_IMAGE_ID'),   // ← FIRST = the cover / hover preview
+    driveImg('SECOND_IMAGE_ID'),  // ← add as many lines as you like
+    driveImg('THIRD_IMAGE_ID'),
   ],
 },
 ```
 
-- **DRIVE_FOLDER_ID** — open the folder in Google Drive, copy the part of the
-  URL after `/folders/`.
-- **DRIVE_IMAGE_FILE_ID** — open the image in Drive, copy the part of the URL
-  after `/file/d/` and before `/view`.
-- The folder must be link-shared: right-click → Share → "Anyone with the link".
-- Order in the list = order in the gallery. Move blocks around to re-rank.
-- To use an image that is NOT on Drive: upload it to `public/img/` in this
-  repo, then write `'img/my-picture.jpg'` instead of `driveImg(...)`.
+- **Change the cover** → move a different `driveImg(...)` line to the top,
+  or replace the first ID.
+- **Add images** → add more `driveImg('IMAGE_ID'),` lines.
+- **IMAGE_ID** → open the image in Google Drive; the URL is
+  `drive.google.com/file/d/`**`THIS_PART`**`/view`. Copy the middle part.
+- **FOLDER_ID** → the part after `/folders/` in a Drive folder URL.
+- The Drive folder must be link-shared: right-click → Share → "Anyone with the link".
+- Order in the `projects` list = order on the site. Move blocks to re-rank.
+- To use a non-Drive image: upload it to `public/img/` in this repo and write
+  `'img/my-picture.jpg'` instead of `driveImg(...)`.
 
-### Add a tile to the complete-works grid
+### Add a project
 
-Same idea, inside `archive = [ ... ]`:
+Copy a whole `{ … }` block inside `projects = [ … ]` and edit its fields.
+
+### Add an archive tile
+
+Same idea inside `archive = [ … ]`:
 
 ```js
 { name: 'New Client', category: 'Campaign Design',
@@ -69,63 +77,47 @@ Same idea, inside `archive = [ ... ]`:
 
 ## 2. Fonts
 
-Three fonts are defined in **`src/styles/main.css`** (top of the file):
+Two fonts, defined at the top of **`src/styles/main.css`**:
 
 ```css
---font-display: 'Syne', ...;            /* big headings   */
---font-serif:  'Cormorant Garamond'...; /* italic accents */
---font-ui:     'Space Grotesk', ...;    /* labels & body  */
+--font-display: 'Bricolage Grotesque Variable', ...;  /* headings, big type */
+--font-ui: 'Inter', ...;                              /* body, labels */
 ```
 
-To switch to another Google Font (e.g. "Sora"):
-1. In **`package.json`**, under `dependencies`, add `"@fontsource/sora": "^5.0.0"`.
-2. In **`src/main.js`**, add `import '@fontsource/sora/700.css';` next to the
-   other font imports (one line per weight you need).
-3. In **`src/styles/main.css`**, change the variable: `--font-display: 'Sora', ...`.
+To switch to another Google Font (e.g. "Space Grotesk"):
+1. In **`package.json`** → `dependencies`, add `"@fontsource-variable/space-grotesk": "^5.0.0"`
+   (or `@fontsource/space-grotesk` for a non-variable font).
+2. In **`src/main.js`**, add `import '@fontsource-variable/space-grotesk';`
+   next to the other font imports.
+3. In **`src/styles/main.css`**, change the variable:
+   `--font-display: 'Space Grotesk Variable', sans-serif;`
 
-Browse available fonts at https://fontsource.org (every Google Font is there).
+Browse fonts at https://fontsource.org (every Google Font is there).
 
 ## 3. Colors
 
 Also at the top of `src/styles/main.css`:
 
 ```css
---ink:   #030807;   /* page background          */
---bone:  #e8f5ee;   /* text                     */
---ember: #37ffa8;   /* the green accent         */
+--paper: #ece9e2;   /* warm background      */
+--ink:   #17150f;   /* near-black text      */
+--accent: #cc4a1f;  /* the rust accent      */
+--muted: #6f6b62;   /* secondary grey text  */
 ```
 
-Change `--ember` (and `--ember-deep`, `--ember-glow`) to re-theme the accent.
+Change `--accent` to re-theme the highlight color everywhere (links, hovers,
+the "available" dot, index numbers). Change `--paper` + `--ink` together if
+you want a different base (e.g. a dark theme: swap them).
 
-## 4. The knight artwork
+## 4. The little details
 
-The four images live in **`public/img/`** as `knight-1.jpg` … `knight-4.jpg`
-(1 full-body front · 2 full-body close · 3 helmet · 4 wide side view).
-Replace a file with a same-style image to change the scene. Wide 16:9,
-2000px+, deep blacks work best.
+- **"Available for work" status** — the header line; edit the text in
+  `index.html` (search for `Available for work`).
+- **Marquee words** (the scrolling ribbon under the hero) — edit the `words`
+  array near the top of `src/populate.js`.
+- **Hero tagline / lede** — in `index.html` (the `.hero` section).
 
-## 5. Which artwork/crop each chapter uses
-
-In **`src/story.js`** find the `scenes` table — one line per chapter:
-
-```js
-{ img: 3, scale: 1.14, ox: 0.02, oy: 0.02, dim: 1.0 },  // calling
-```
-
-`img` = which artwork (0–3) · `scale` = zoom · `ox/oy` = pan · `dim` = brightness.
-
-## 6. Music & sounds
-
-The ♪ toggle in the header plays a synthesized dark-fantasy ambience
-(drone, wind, war drums) plus UI click sounds — no audio file needed.
-
-**To use a real soundtrack instead** (e.g. an epic instrumental you have a
-license for): upload the file to this repo as **`public/audio/theme.mp3`**.
-The site automatically plays it (looped) instead of the synthesized
-ambience. Keep it under ~5 MB for fast loading. Royalty-free epic music:
-pixabay.com/music, uppbeat.io or artlist.io.
-
-## 7. Working on your own computer (optional)
+## 5. Working on your own computer (optional)
 
 Only needed for bigger changes. Install [Node.js](https://nodejs.org), then:
 
@@ -138,8 +130,19 @@ npm run dev        # live preview at http://localhost:5173
 
 Push your commits and the site deploys automatically.
 
-## 8. Fixing bugs later
+## 6. Fixing bugs or making bigger changes later
 
 Any AI coding assistant (Claude, ChatGPT, Copilot…) can maintain this repo —
-it is a standard Vite + Three.js + GSAP project. Point it at this file and
-`README.md` first; the code is small and heavily commented.
+it is a standard Vite + GSAP + Lenis project (plain HTML/CSS/JS, no framework).
+Point it at this file and `README.md` first; the code is small and commented.
+
+**Where things live:**
+
+| Area | File |
+| --- | --- |
+| All content / projects / text | `src/data/content.js` |
+| Page structure | `index.html` |
+| Theme, layout, typography | `src/styles/main.css` |
+| Building the page from data + project panel | `src/populate.js` |
+| Smooth scroll, custom cursor, reveals, hover previews | `src/interactions.js` |
+| Loader & startup | `src/main.js` |

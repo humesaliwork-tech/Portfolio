@@ -3,144 +3,179 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Humes Ali — Senior Creative Designer & 3D Artist</title>
-  <meta name="description" content="The interactive 3D portfolio of Syed Humes Ali — Senior Creative Designer & 3D Artist, Dubai. Brand, motion, 3D and campaign design." />
-  <meta property="og:title" content="Humes Ali — Creative Designer & 3D Artist" />
-  <meta property="og:description" content="A warrior's tale told in design — brand, motion and 3D work from Dubai." />
-  <meta name="theme-color" content="#02100a" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>⚔️</text></svg>" />
+  <title>Syed Humes Ali — Senior Creative Designer & 3D Artist</title>
+  <meta name="description" content="Syed Humes Ali — Senior Creative Designer & 3D Artist based in Dubai. Brand, motion, 3D and campaign design." />
+  <meta property="og:title" content="Syed Humes Ali — Creative Designer & 3D Artist" />
+  <meta property="og:description" content="Brand, motion, 3D and campaign design from Dubai." />
+  <meta name="theme-color" content="#ECE9E2" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2317150f'/><text x='50' y='72' font-size='58' font-family='Arial' font-weight='700' fill='%23ece9e2' text-anchor='middle'>H</text></svg>" />
 </head>
 <body>
-  <!-- ══ Loader ══ -->
-  <div id="loader" aria-hidden="true">
-    <div class="loader-inner">
-      <div class="loader-sigil">⚔</div>
-      <div class="loader-count"><span id="loader-num">0</span></div>
-      <div class="loader-bar"><span id="loader-fill"></span></div>
-      <p class="loader-tag">Forging the tale…</p>
-    </div>
+  <!-- custom cursor -->
+  <div class="cursor" id="cursor" aria-hidden="true"><span class="cursor-label"></span></div>
+
+  <!-- framed border (K95-style) -->
+  <div class="frame" aria-hidden="true">
+    <span class="frame-line frame-top"></span>
+    <span class="frame-line frame-bottom"></span>
+    <span class="frame-line frame-left"></span>
+    <span class="frame-line frame-right"></span>
   </div>
 
-  <!-- ══ 3D stage ══ -->
-  <canvas id="stage"></canvas>
-  <div class="vignette" aria-hidden="true"></div>
+  <!-- loader -->
+  <div id="loader" aria-hidden="true">
+    <div class="loader-word"><span>Syed Humes Ali</span></div>
+    <div class="loader-num"><span id="loader-num">0</span>—100</div>
+  </div>
 
-  <!-- ══ Chrome ══ -->
+  <!-- header -->
   <header class="site-head">
-    <a class="brand" href="#hero" data-nav>SYED&nbsp;HUMES&nbsp;ALI</a>
-    <div class="head-right">
-      <span class="chapter-tag"><span id="chapter-numeral"></span><span id="chapter-label">The Gate</span></span>
-      <button class="head-cta" id="sound-toggle" aria-pressed="false">♪ Sound off</button>
-      <a class="head-cta" href="#summon" data-nav>Join Forces</a>
-    </div>
+    <a class="brand" href="#top" data-nav data-cursor="home">
+      <span class="brand-mark">◆</span> Syed&nbsp;Humes&nbsp;Ali
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#work" data-nav>Work</a>
+      <a href="#about" data-nav>About</a>
+      <a href="#contact" data-nav>Contact</a>
+    </nav>
+    <a class="avail" href="#contact" data-nav>
+      <span class="avail-dot"></span> Available for work
+    </a>
   </header>
 
-  <nav class="rail" aria-label="Chapters"></nav>
+  <main id="top">
 
-  <div class="scroll-hint" id="scroll-hint">
-    <span class="scroll-hint-line"></span>
-    <span>Scroll to begin the tale</span>
-  </div>
-
-  <!-- ══ Story ══ -->
-  <main id="content">
-
-    <!-- The Gate -->
-    <section class="chapter chapter--hero" id="hero" data-chapter="hero">
-      <div class="hero-core">
-        <p class="hero-kicker reveal">A tale of craft, told in the dark</p>
-        <h1 class="hero-title">
-          <span class="reveal">SYED HUMES</span>
-          <span class="reveal">ALI</span>
-        </h1>
-        <p class="hero-sub reveal">Senior Creative Designer <em>&amp;</em> 3D Artist — Dubai</p>
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="hero-top">
+        <p class="tag reveal-fade">Senior Creative Designer &amp; 3D Artist</p>
+        <p class="tag tag-right reveal-fade">Dubai — UAE · Est. 2021</p>
+      </div>
+      <h1 class="hero-title" id="hero-title">
+        <span class="line"><span>Syed Humes</span></span>
+        <span class="line"><span>Ali<em class="hero-mark">®</em></span></span>
+      </h1>
+      <div class="hero-bottom">
+        <p class="hero-lede reveal-fade">
+          I turn ideas into visually compelling brands, campaigns and 3D worlds —
+          built to close deals and win attention.
+        </p>
+        <a class="scroll-cue reveal-fade" href="#work" data-nav>
+          <span>Selected Work</span>
+          <span class="scroll-cue-arrow">↓</span>
+        </a>
       </div>
     </section>
 
-    <!-- I · The Calling -->
-    <section class="chapter chapter--calling" id="calling" data-chapter="calling">
-      <div class="chapter-body">
-        <p class="chapter-eyebrow reveal">Chapter I — The Calling</p>
-        <h2 class="big-line">
-          <span class="reveal">Every brand is a battle</span>
-          <span class="reveal">for attention.</span>
-          <span class="reveal"><em>I fight it with design.</em></span>
-        </h2>
-        <p class="chapter-text reveal" id="calling-summary"></p>
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track" id="marquee-track"></div>
+    </div>
+
+    <!-- WORK -->
+    <section class="section work" id="work">
+      <div class="section-head">
+        <span class="section-idx">01</span>
+        <h2 class="section-label">Selected Work</h2>
+        <span class="section-count" id="work-count"></span>
+      </div>
+      <ol class="work-list" id="work-list"></ol>
+      <div class="work-more">
+        <a class="btn-line" id="archive-toggle" data-cursor="expand">
+          <span>The complete archive</span>
+          <span class="btn-line-arrow">↗</span>
+        </a>
+        <div class="archive-grid" id="archive-grid" hidden></div>
       </div>
     </section>
 
-    <!-- II · The Campaigns -->
-    <section class="chapter chapter--campaigns" id="campaigns" data-chapter="campaigns">
-      <div class="chapter-body">
-        <p class="chapter-eyebrow reveal">Chapter II — The Campaigns</p>
-        <h2 class="chapter-heading reveal">Battles fought,<br /><em>ground gained.</em></h2>
-        <ol class="xp-list" id="xp-list"></ol>
+    <!-- ABOUT -->
+    <section class="section about" id="about">
+      <div class="section-head">
+        <span class="section-idx">02</span>
+        <h2 class="section-label">About</h2>
+      </div>
+      <div class="about-grid">
+        <p class="about-lead" id="about-lead"></p>
+        <div class="about-side">
+          <div class="about-block">
+            <h3>Based in</h3>
+            <p id="about-location"></p>
+          </div>
+          <div class="about-block">
+            <h3>Focus</h3>
+            <p>Brand Identity · Motion · 3D · Campaign &amp; Web Design</p>
+          </div>
+          <div class="about-block">
+            <h3>Education</h3>
+            <div id="about-education"></div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- III · The Conquests -->
-    <section class="chapter chapter--conquests" id="conquests" data-chapter="conquests">
-      <div class="conquests-intro chapter-body">
-        <p class="chapter-eyebrow reveal">Chapter III — The Conquests</p>
-        <h2 class="chapter-heading reveal">Work that <em>survived</em><br />the fire.</h2>
-        <p class="chapter-text reveal">Selected campaigns, identities and 3D worlds. Drag through the dark →</p>
+    <!-- EXPERIENCE -->
+    <section class="section exp" id="experience">
+      <div class="section-head">
+        <span class="section-idx">03</span>
+        <h2 class="section-label">Experience</h2>
       </div>
-      <div class="gallery-pin" id="gallery-pin">
-        <div class="gallery-track" id="gallery-track"></div>
-      </div>
-      <div class="also-served chapter-body">
-        <p class="chapter-eyebrow reveal">The complete works</p>
-        <p class="chapter-text reveal">Every campaign has its own vault — open any of them on Drive.</p>
-        <div class="archive-grid reveal" id="archive-grid"></div>
-      </div>
+      <ol class="exp-list" id="exp-list"></ol>
     </section>
 
-    <!-- IV · The Arsenal -->
-    <section class="chapter chapter--arsenal" id="arsenal" data-chapter="arsenal">
-      <div class="chapter-body">
-        <p class="chapter-eyebrow reveal">Chapter IV — The Arsenal</p>
-        <h2 class="chapter-heading reveal">The blades<br /><em>I carry.</em></h2>
-        <div class="arsenal-groups" id="arsenal-groups"></div>
+    <!-- CAPABILITIES -->
+    <section class="section caps" id="capabilities">
+      <div class="section-head">
+        <span class="section-idx">04</span>
+        <h2 class="section-label">Capabilities</h2>
       </div>
+      <div class="caps-grid" id="caps-grid"></div>
     </section>
 
-    <!-- V · The Honors -->
-    <section class="chapter chapter--honors" id="honors" data-chapter="honors">
-      <div class="chapter-body">
-        <p class="chapter-eyebrow reveal">Chapter V — The Honors</p>
-        <h2 class="chapter-heading reveal">Marks of<br /><em>the crown.</em></h2>
-        <div class="honor-cards" id="honor-cards"></div>
-        <div class="education reveal" id="education"></div>
+    <!-- RECOGNITION -->
+    <section class="section rec" id="recognition">
+      <div class="section-head">
+        <span class="section-idx">05</span>
+        <h2 class="section-label">Recognition</h2>
       </div>
+      <div class="rec-list" id="rec-list"></div>
     </section>
 
-    <!-- VI · Join Forces -->
-    <section class="chapter chapter--summon" id="summon" data-chapter="summon">
-      <div class="chapter-body summon-body">
-        <p class="chapter-eyebrow reveal">Chapter VI — Join Forces</p>
-        <h2 class="summon-title">
-          <span class="reveal">The portal</span>
-          <span class="reveal"><em>is open.</em></span>
-        </h2>
-        <a class="summon-mail reveal" id="summon-mail" href="#">humesaliwork@gmail.com</a>
-        <ul class="summon-links reveal" id="summon-links"></ul>
-        <footer class="colophon reveal">
-          <span id="colophon-left"></span>
-          <span>Forged in WebGL · Dubai</span>
-        </footer>
+    <!-- CONTACT -->
+    <section class="section contact" id="contact">
+      <p class="contact-kicker reveal-fade">Have a project in mind?</p>
+      <a class="contact-mail" id="contact-mail" href="#" data-cursor="email">
+        <span class="line"><span id="contact-mail-text"></span></span>
+      </a>
+      <div class="contact-foot">
+        <ul class="contact-links" id="contact-links"></ul>
+        <div class="contact-meta">
+          <span id="contact-copy"></span>
+          <span id="contact-time"></span>
+        </div>
       </div>
     </section>
 
   </main>
 
-  <!-- ══ Project detail view ══ -->
+  <!-- floating work preview -->
+  <div class="work-preview" id="work-preview" aria-hidden="true">
+    <img id="work-preview-img" alt="" referrerpolicy="no-referrer" />
+  </div>
+
+  <!-- project detail -->
   <div id="project-view" class="pview" hidden>
     <div class="pview-backdrop" data-close></div>
     <article class="pview-panel" role="dialog" aria-modal="true">
-      <button class="pview-close" data-close aria-label="Close">✕</button>
-      <p class="chapter-eyebrow" id="pv-cat"></p>
+      <div class="pview-bar">
+        <span class="pview-idx" id="pv-idx"></span>
+        <button class="pview-close" data-close data-cursor="close" aria-label="Close">Close</button>
+      </div>
       <h2 class="pview-title" id="pv-title"></h2>
+      <div class="pview-meta">
+        <span id="pv-cat"></span>
+        <span id="pv-year"></span>
+      </div>
       <p class="pview-desc" id="pv-desc"></p>
       <div class="pview-actions" id="pv-actions"></div>
       <div class="pview-images" id="pv-images"></div>

@@ -35,7 +35,7 @@ class Bard {
     if (this.ctx.state === 'suspended') await this.ctx.resume();
     this.on = !this.on;
     localStorage.setItem('bard', this.on ? 'on' : 'off');
-    if (this.on) this._startMusic();
+    if (this.on) { this._startMusic(); this._hit(56, 0.5, 0.3); }
     else this._stopMusic();
     return this.on;
   }
@@ -69,11 +69,11 @@ class Bard {
     // deep drone — two detuned lows through a dark filter
     const droneFilter = ctx.createBiquadFilter();
     droneFilter.type = 'lowpass';
-    droneFilter.frequency.value = 190;
+    droneFilter.frequency.value = 480;
     const droneGain = ctx.createGain();
-    droneGain.gain.value = 0.05;
+    droneGain.gain.value = 0.11;
     droneFilter.connect(droneGain).connect(out);
-    for (const [type, freq] of [['sawtooth', 55], ['sine', 55.6], ['sine', 110.3]]) {
+    for (const [type, freq] of [['sawtooth', 55], ['sine', 110.4], ['triangle', 220.2]]) {
       const o = ctx.createOscillator();
       o.type = type;
       o.frequency.value = freq;
@@ -85,7 +85,7 @@ class Bard {
     const lfo = ctx.createOscillator();
     lfo.frequency.value = 0.05;
     const lfoAmt = ctx.createGain();
-    lfoAmt.gain.value = 70;
+    lfoAmt.gain.value = 180;
     lfo.connect(lfoAmt).connect(droneFilter.frequency);
     lfo.start();
     this.timers.push(() => lfo.stop());
@@ -99,15 +99,15 @@ class Bard {
     wind.loop = true;
     const windFilter = ctx.createBiquadFilter();
     windFilter.type = 'bandpass';
-    windFilter.frequency.value = 320;
+    windFilter.frequency.value = 640;
     windFilter.Q.value = 0.6;
     const windGain = ctx.createGain();
-    windGain.gain.value = 0.014;
+    windGain.gain.value = 0.05;
     wind.connect(windFilter).connect(windGain).connect(out);
     const windLfo = ctx.createOscillator();
     windLfo.frequency.value = 0.07;
     const windAmt = ctx.createGain();
-    windAmt.gain.value = 160;
+    windAmt.gain.value = 320;
     windLfo.connect(windAmt).connect(windFilter.frequency);
     wind.start();
     windLfo.start();
@@ -127,32 +127,32 @@ class Bard {
     const scale = [220, 261.6, 329.6, 392, 293.7, 174.6];
     const note = () => {
       if (!this.musicGain) return;
-      const f = scale[Math.floor(Math.random() * scale.length)] / 2;
+      const f = scale[Math.floor(Math.random() * scale.length)];
       const o = ctx.createOscillator();
-      o.type = 'sine';
+      o.type = 'triangle';
       o.frequency.value = f;
       const g = ctx.createGain();
       const t = ctx.currentTime;
       g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(0.05, t + 0.08);
+      g.gain.linearRampToValueAtTime(0.13, t + 0.08);
       g.gain.exponentialRampToValueAtTime(0.0001, t + 3.2);
       o.connect(g);
       g.connect(out);
       g.connect(delay);
       o.start(t);
       o.stop(t + 3.4);
-      this._later(note, 6000 + Math.random() * 8000);
+      this._later(note, 4000 + Math.random() * 6000);
     };
-    this._later(note, 3500);
+    this._later(note, 600);
 
     // distant war drum
     const drum = () => {
       if (!this.musicGain) return;
-      this._hit(42, 0.5, 0.09, out);
-      if (Math.random() < 0.35) setTimeout(() => this._hit(38, 0.4, 0.06, out), 260);
-      this._later(drum, 9000 + Math.random() * 9000);
+      this._hit(52, 0.6, 0.28, out);
+      if (Math.random() < 0.35) setTimeout(() => this._hit(46, 0.5, 0.18, out), 280);
+      this._later(drum, 7000 + Math.random() * 7000);
     };
-    this._later(drum, 6000);
+    this._later(drum, 1400);
   }
 
   _stopMusic() {
@@ -188,6 +188,20 @@ class Bard {
     o.connect(g).connect(dest || this.master);
     o.start(t);
     o.stop(t + dur + 0.05);
+    // short noise transient so the hit reads on small speakers
+    const nb = ctx.createBuffer(1, ctx.sampleRate * 0.06, ctx.sampleRate);
+    const nc = nb.getChannelData(0);
+    for (let i = 0; i < nc.length; i++) nc[i] = (Math.random() * 2 - 1) * (1 - i / nc.length);
+    const ns = ctx.createBufferSource();
+    ns.buffer = nb;
+    const nf = ctx.createBiquadFilter();
+    nf.type = 'lowpass';
+    nf.frequency.value = 1600;
+    const ng = ctx.createGain();
+    ng.gain.setValueAtTime(vol * 0.7, t);
+    ng.gain.exponentialRampToValueAtTime(0.0001, t + 0.07);
+    ns.connect(nf).connect(ng).connect(dest || this.master);
+    ns.start(t);
   }
 
   /* ── UI sounds (work whenever sound is on) ─────────────── */
@@ -200,7 +214,7 @@ class Bard {
     o.frequency.setValueAtTime(1400, t);
     o.frequency.exponentialRampToValueAtTime(700, t + 0.06);
     const g = ctx.createGain();
-    g.gain.setValueAtTime(0.055, t);
+    g.gain.setValueAtTime(0.1, t);
     g.gain.exponentialRampToValueAtTime(0.0001, t + 0.07);
     o.connect(g).connect(this.master);
     o.start(t);
@@ -209,16 +223,17 @@ class Bard {
 
   thud() {
     if (!this.on || !this.ctx) return;
-    this._hit(60, 0.35, 0.07);
+    this._hit(64, 0.4, 0.14);
   }
 
   openHit() {
     if (!this.on || !this.ctx) return;
-    this._hit(48, 0.55, 0.1);
+    this._hit(50, 0.6, 0.2);
   }
 }
 
 export const bard = new Bard();
+if (location.search.includes('debug')) window.__bard = bard;
 
 /** header toggle + global click sounds */
 export function wireSound() {

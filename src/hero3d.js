@@ -1,166 +1,143 @@
 import * as THREE from 'three';
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 /**
- * Hero centrepiece: an interactive spiral galaxy of glowing green points.
- * Rotates continuously, tilts toward the pointer, and dissolves as the
- * visitor scrolls past the hero. Pure procedural geometry — no assets.
+ * Hero centrepiece: a sword whose blade also reads as a digital pen —
+ * a fine tapering nib, an emerald "ink" line down the fuller, a ribbed
+ * barrel grip and a capped pommel. It floats, rotates, tilts to the
+ * pointer and drifts as the visitor scrolls. Light, no post-processing,
+ * so it stays smooth on mobile and over a white page.
  */
 export function initHero3D(canvas) {
   const isMobile = matchMedia('(max-width: 760px)').matches;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ACCENT = 0x10b981;
+  const ACCENT_BRIGHT = 0x4dffa8;
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(46, innerWidth / innerHeight, 0.1, 100);
+  const camera = new THREE.PerspectiveCamera(38, innerWidth / innerHeight, 0.1, 100);
   camera.position.set(0, 0, 15);
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio, isMobile ? 1.6 : 2));
   renderer.setSize(innerWidth, innerHeight);
   renderer.setClearColor(0x000000, 0);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.1;
 
-  // ── build the spiral galaxy ────────────────────────────────
-  const COUNT = isMobile ? 6000 : 14000;
-  const ARMS = 4;
-  const RADIUS = 9;
-  const SPIN = 4.2;
+  // soft studio reflections for the metal
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
 
-  const positions = new Float32Array(COUNT * 3);
-  const colors = new Float32Array(COUNT * 3);
-  const scales = new Float32Array(COUNT);
+  // lights
+  const key = new THREE.DirectionalLight(0xffffff, 2.2);
+  key.position.set(4, 8, 6);
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(ACCENT_BRIGHT, 1.4);
+  rim.position.set(-6, -2, -4);
+  scene.add(rim);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.35));
 
-  const core = new THREE.Color(0x9dffc6);   // bright green core
-  const mid = new THREE.Color(0x3dff88);    // bright green
-  const edge = new THREE.Color(0x0a6b39);   // deep green edge
-
-  for (let i = 0; i < COUNT; i++) {
-    const t = Math.pow(Math.random(), 0.7);      // bias toward the core
-    const radius = t * RADIUS;
-    const branch = ((i % ARMS) / ARMS) * Math.PI * 2;
-    const spin = t * SPIN;
-    const angle = branch + spin;
-
-    // fuzz that widens toward the edge
-    const spread = 0.28 + t * 0.9;
-    const rx = (Math.random() - 0.5) * spread * (Math.random() < 0.5 ? 1 : 1.4);
-    const ry = (Math.random() - 0.5) * spread * 0.5;
-    const rz = (Math.random() - 0.5) * spread * (Math.random() < 0.5 ? 1 : 1.4);
-
-    positions[i * 3] = Math.cos(angle) * radius + rx;
-    positions[i * 3 + 1] = ry + (Math.random() - 0.5) * 0.4;
-    positions[i * 3 + 2] = Math.sin(angle) * radius + rz;
-
-    const c = core.clone();
-    c.lerp(mid, Math.min(1, t * 1.6));
-    if (t > 0.55) c.lerp(edge, (t - 0.55) / 0.45);
-    colors[i * 3] = c.r;
-    colors[i * 3 + 1] = c.g;
-    colors[i * 3 + 2] = c.b;
-
-    scales[i] = (1 - t) * 1.5 + 0.35;
-  }
-
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-  geo.setAttribute('aScale', new THREE.BufferAttribute(scales, 1));
-
-  const uniforms = {
-    uTime: { value: 0 },
-    uSize: { value: (isMobile ? 22 : 32) * renderer.getPixelRatio() },
-    uProgress: { value: 0 },
-  };
-
-  const material = new THREE.ShaderMaterial({
-    uniforms,
-    transparent: true,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending,
-    vertexColors: true,
-    vertexShader: /* glsl */ `
-      uniform float uTime;
-      uniform float uSize;
-      uniform float uProgress;
-      attribute float aScale;
-      varying vec3 vColor;
-      varying float vFade;
-      void main() {
-        vColor = color;
-        vec3 p = position;
-        // gentle vertical drift so the disc breathes
-        p.y += sin(uTime * 0.6 + p.x * 0.4 + p.z * 0.3) * 0.12;
-        vec4 mv = modelViewMatrix * vec4(p, 1.0);
-        gl_Position = projectionMatrix * mv;
-        float twinkle = 0.7 + 0.3 * sin(uTime * 2.0 + aScale * 40.0);
-        gl_PointSize = uSize * aScale * twinkle * (1.0 - uProgress * 0.6) / -mv.z;
-        vFade = 1.0 - uProgress;
-      }
-    `,
-    fragmentShader: /* glsl */ `
-      varying vec3 vColor;
-      varying float vFade;
-      void main() {
-        float d = length(gl_PointCoord - 0.5);
-        float a = smoothstep(0.5, 0.0, d);
-        gl_FragColor = vec4(vColor, a * a * vFade);
-      }
-    `,
+  // ── materials ──────────────────────────────────────────────
+  const steel = new THREE.MeshStandardMaterial({ color: 0x1a1c1e, metalness: 1, roughness: 0.28 });
+  const darkSteel = new THREE.MeshStandardMaterial({ color: 0x0e0f10, metalness: 0.9, roughness: 0.42 });
+  const emissive = new THREE.MeshStandardMaterial({
+    color: 0x0b3d2b, emissive: ACCENT, emissiveIntensity: 2.4, metalness: 0.4, roughness: 0.3,
   });
 
-  // Desktop: shift the bright core into the open right-side negative
-  // space. Mobile: lift it into the upper area so it clears the name.
-  const offsetX = isMobile ? 0 : 3.4;
-  const offsetY = isMobile ? 6.2 : 0;
-  const galaxy = new THREE.Points(geo, material);
-  galaxy.rotation.x = -0.9;   // tilt to a galaxy view
-  galaxy.position.set(offsetX, offsetY, 0);
-  scene.add(galaxy);
+  // ── build the sword / pen ──────────────────────────────────
+  const sword = new THREE.Group();
 
-  // faint core glow sprite
-  const glowTex = (() => {
-    const c = document.createElement('canvas');
-    c.width = c.height = 128;
-    const ctx = c.getContext('2d');
-    const g = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
-    g.addColorStop(0, 'rgba(180,255,210,0.9)');
-    g.addColorStop(0.3, 'rgba(61,255,136,0.35)');
-    g.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, 128, 128);
-    return new THREE.CanvasTexture(c);
-  })();
-  const glow = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: glowTex, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false,
-    opacity: isMobile ? 0.28 : 0.42,
+  // BLADE — a 4-sided cone gives a diamond cross-section tapering to a
+  // fine nib point. Flattened on Z so it reads as a blade / pen nib.
+  const blade = new THREE.Mesh(new THREE.ConeGeometry(0.42, 7.2, 4, 1), steel);
+  blade.geometry.rotateY(Math.PI / 4);
+  blade.scale.set(1, 1, 0.28);
+  blade.position.y = 1.9;
+  sword.add(blade);
+
+  // FULLER — glowing emerald "ink line" down the centre of the blade
+  const fuller = new THREE.Mesh(new THREE.BoxGeometry(0.07, 6.4, 0.05), emissive);
+  fuller.position.set(0, 2.0, 0.12);
+  sword.add(fuller);
+  const fullerBack = fuller.clone();
+  fullerBack.position.z = -0.12;
+  sword.add(fullerBack);
+
+  // NIB detail near the tip — a split tine + breather dot, pen-like
+  const nibTine = new THREE.Mesh(new THREE.BoxGeometry(0.04, 1.0, 0.06), emissive);
+  nibTine.position.set(0, -1.35, 0.12);
+  sword.add(nibTine);
+  const breather = new THREE.Mesh(new THREE.SphereGeometry(0.11, 16, 16), emissive);
+  breather.position.set(0, -0.7, 0.12);
+  sword.add(breather);
+
+  // GUARD — slim crossguard / grip collar
+  const guard = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.28, 0.5), steel);
+  guard.position.y = -1.7;
+  sword.add(guard);
+  guard.geometry.translate(0, 0, 0);
+  const guardGem = new THREE.Mesh(new THREE.OctahedronGeometry(0.16), emissive);
+  guardGem.position.set(0, -1.7, 0.28);
+  sword.add(guardGem);
+
+  // GRIP — ribbed barrel (reads as a pen body)
+  const grip = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.24, 2.6, 24), darkSteel);
+  grip.position.y = -3.15;
+  sword.add(grip);
+  for (let i = 0; i < 9; i++) {
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.245, 0.02, 8, 24), steel);
+    ring.rotation.x = Math.PI / 2;
+    ring.position.y = -2.05 - i * 0.26;
+    sword.add(ring);
+  }
+
+  // POMMEL — capped end with a clip (pen top)
+  const pommel = new THREE.Mesh(new THREE.SphereGeometry(0.3, 24, 20), steel);
+  pommel.position.y = -4.6;
+  pommel.scale.y = 0.8;
+  sword.add(pommel);
+  const clip = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.9, 0.06), steel);
+  clip.position.set(0.24, -4.15, 0);
+  sword.add(clip);
+  const tip = new THREE.Mesh(new THREE.SphereGeometry(0.08, 16, 16), emissive);
+  tip.position.y = 5.5;
+  sword.add(tip);
+
+  // present the whole object at a dynamic diagonal, right of the type
+  sword.rotation.z = 0.42;
+  sword.rotation.x = 0.1;
+  sword.scale.setScalar(isMobile ? 0.58 : 0.8);
+  scene.add(sword);
+
+  // glowing tip sprite
+  const glowTex = radialTex(ACCENT_BRIGHT);
+  const tipGlow = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: glowTex, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: 0.9,
   }));
-  glow.scale.set(isMobile ? 5.5 : 7, isMobile ? 5.5 : 7, 1);
-  glow.position.set(offsetX, offsetY, 0);
-  scene.add(glow);
+  tipGlow.scale.set(1.5, 1.5, 1);
+  sword.add(tipGlow);
+  tipGlow.position.y = 5.5;
 
-  // ── post: bloom ────────────────────────────────────────────
-  const composer = new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(
-    new THREE.Vector2(innerWidth, innerHeight),
-    isMobile ? 0.6 : 0.8, 0.75, 0.05
+  // soft contact shadow under the object (over the white page)
+  const shadow = new THREE.Mesh(
+    new THREE.PlaneGeometry(7, 7),
+    new THREE.MeshBasicMaterial({ map: radialTex(0x000000, 0.5), transparent: true, opacity: 0.14, depthWrite: false })
   );
-  composer.addPass(bloom);
-  composer.addPass(new OutputPass());
+  shadow.rotation.x = -Math.PI / 2;
+  shadow.position.y = -5.6;
+  scene.add(shadow);
 
-  // ── interaction state ──────────────────────────────────────
+  // ── interaction ────────────────────────────────────────────
   const pointer = new THREE.Vector2(0, 0);
   const pTarget = new THREE.Vector2(0, 0);
   addEventListener('pointermove', (e) => {
     pTarget.set((e.clientX / innerWidth) * 2 - 1, (e.clientY / innerHeight) * 2 - 1);
   });
 
-  let progress = 0;        // 0 in hero, 1 scrolled away
-  let running = true;
+  let progress = 0, running = true;
   const api = {
-    setProgress(p) { progress = p; canvas.style.opacity = String(1 - p * 0.9); },
+    setProgress(p) { progress = p; canvas.style.opacity = String(1 - p * 0.85); },
     setRunning(r) { running = r; },
   };
 
@@ -168,28 +145,45 @@ export function initHero3D(canvas) {
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(innerWidth, innerHeight);
-    composer.setSize(innerWidth, innerHeight);
-    uniforms.uSize.value = (isMobile ? 22 : 32) * renderer.getPixelRatio();
   });
 
   const clock = new THREE.Clock();
+  const baseX = isMobile ? 0.4 : 4.6;   // sit right of the type on desktop
+  const baseY = isMobile ? 3.8 : 0;     // lift into the top area on mobile
   const loop = () => {
     requestAnimationFrame(loop);
     if (!running) return;
     const t = clock.getElapsedTime();
-    uniforms.uTime.value = t;
-    uniforms.uProgress.value = progress;
+    pointer.lerp(pTarget, 0.06);
 
-    pointer.lerp(pTarget, 0.05);
-    galaxy.rotation.y = t * (reduce ? 0 : 0.075) + pointer.x * 0.35;
-    galaxy.rotation.x = -0.9 + pointer.y * 0.22;
-    galaxy.rotation.z = pointer.x * 0.08;
-    glow.material.opacity = ((isMobile ? 0.28 : 0.42) - progress * 0.4);
-    camera.position.z = 15 + progress * 6;
+    sword.position.x = baseX + pointer.x * 0.6;
+    sword.position.y = baseY + Math.sin(t * 0.9) * 0.25 - progress * 4;
+    sword.rotation.y = t * (reduce ? 0 : 0.35) + pointer.x * 0.5;
+    sword.rotation.z = 0.42 + pointer.y * 0.12 + progress * 0.5;
+    sword.rotation.x = 0.1 - pointer.y * 0.15;
+    emissive.emissiveIntensity = 2.2 + Math.sin(t * 2.2) * 0.5;
+    tipGlow.material.opacity = (0.9 + Math.sin(t * 2.2) * 0.2) * (1 - progress);
+    shadow.position.x = sword.position.x;
+    shadow.material.opacity = 0.14 * (1 - progress);
 
-    composer.render();
+    renderer.render(scene, camera);
   };
   loop();
 
   return api;
+}
+
+function radialTex(hex, inner = 1) {
+  const c = document.createElement('canvas');
+  c.width = c.height = 128;
+  const ctx = c.getContext('2d');
+  const col = new THREE.Color(hex);
+  const r = Math.round(col.r * 255), g = Math.round(col.g * 255), b = Math.round(col.b * 255);
+  const grad = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+  grad.addColorStop(0, `rgba(${r},${g},${b},${inner})`);
+  grad.addColorStop(0.4, `rgba(${r},${g},${b},${inner * 0.35})`);
+  grad.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 128, 128);
+  return new THREE.CanvasTexture(c);
 }

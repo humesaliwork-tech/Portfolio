@@ -77,12 +77,16 @@ Same idea inside `archive = [ … ]`:
 
 ## 2. Fonts
 
-Two fonts, defined at the top of **`src/styles/main.css`**:
+Three fonts, defined at the top of **`src/styles/main.css`**:
 
 ```css
---font-display: 'Bricolage Grotesque Variable', ...;  /* headings, big type */
---font-ui: 'Inter', ...;                              /* body, labels */
+--font-display: 'Bricolage Grotesque Variable', ...;  /* bold modern headings */
+--font-serif:   'Instrument Serif', ...;              /* calligraphic italic accents */
+--font-ui:      'Inter', ...;                         /* body, labels */
 ```
+
+(The elegant italic words — "Syed", "Work", "in mind?" — use `--font-serif`
+via the `.serif` class in the HTML.)
 
 To switch to another Google Font (e.g. "Space Grotesk"):
 1. In **`package.json`** → `dependencies`, add `"@fontsource-variable/space-grotesk": "^5.0.0"`
@@ -99,15 +103,22 @@ Browse fonts at https://fontsource.org (every Google Font is there).
 Also at the top of `src/styles/main.css`:
 
 ```css
---paper: #ece9e2;   /* warm background      */
---ink:   #17150f;   /* near-black text      */
---accent: #cc4a1f;  /* the rust accent      */
---muted: #6f6b62;   /* secondary grey text  */
+--bg:    #f4f3ee;   /* off-white background     */
+--ink:   #0f0f0c;   /* near-black text          */
+--green: #0e9f6e;   /* emerald accent           */
+--muted: #6b6960;   /* secondary grey text      */
 ```
 
-Change `--accent` to re-theme the highlight color everywhere (links, hovers,
-the "available" dot, index numbers). Change `--paper` + `--ink` together if
-you want a different base (e.g. a dark theme: swap them).
+Change `--green` to re-theme the accent everywhere (links, hovers, the
+"available" dot, index numbers, the sword's glow). Change `--bg` + `--ink`
+together for a different base (e.g. a dark theme: swap them).
+
+## 3b. The 3D sword / pen
+
+Lives in **`src/hero3d.js`** — a procedural Three.js model (no image file).
+Near the top, `ACCENT` / `ACCENT_BRIGHT` set the glow color, and the material
+colors (`steel`, `darkSteel`, `emissive`) set the metal + energy look. The
+`baseX` / `baseY` values position it; `sword.scale` sizes it.
 
 ## 4. The little details
 

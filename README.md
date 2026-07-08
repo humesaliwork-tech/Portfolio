@@ -6,10 +6,13 @@
 
 The portfolio of **Syed Humes Ali**, Senior Creative Designer & 3D Artist (Dubai).
 
-A modern, editorial, typography-led single-page site — warm light palette, large
-grotesk display type, a framed layout, custom cursor, smooth inertial scrolling,
-work-first project list with hover previews, and buttery scroll-reveal animations.
-Design direction inspired by studio sites like Studio K95 and TRIONN.
+A modern, editorial, typography-led single-page site — bright minimal palette
+(off-white + black + emerald), a calligraphy-meets-grotesk type system
+(Instrument Serif italic + Bricolage Grotesque + Inter), a framed layout, custom
+cursor, smooth inertial scrolling, and an interactive **3D sword that doubles as
+a digital pen** (Three.js) floating in the hero — it rotates, tilts to the
+pointer and drifts on scroll. Work-first project list with hover previews and a
+slide-in detail panel. Design direction inspired by lml.cc, Studio K95 and TRIONN.
 
 ## Stack
 
@@ -52,6 +55,7 @@ folders must remain link-shared ("anyone with the link can view").
 | All content / projects / text | `src/data/content.js` |
 | Page structure | `index.html` |
 | Theme, layout, typography | `src/styles/main.css` |
+| The 3D sword / digital-pen hero | `src/hero3d.js` |
 | Build page from data + project detail panel | `src/populate.js` |
 | Smooth scroll, custom cursor, reveals, hover previews | `src/interactions.js` |
 | Loader & startup | `src/main.js` |

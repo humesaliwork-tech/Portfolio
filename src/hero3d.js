@@ -11,8 +11,8 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 export function initHero3D(canvas) {
   const isMobile = matchMedia('(max-width: 760px)').matches;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const ACCENT = 0x10b981;
-  const ACCENT_BRIGHT = 0x4dffa8;
+  const ACCENT = 0xffffff;
+  const ACCENT_BRIGHT = 0xffffff;
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(38, innerWidth / innerHeight, 0.1, 100);
@@ -39,10 +39,11 @@ export function initHero3D(canvas) {
   scene.add(new THREE.AmbientLight(0xffffff, 0.35));
 
   // ── materials ──────────────────────────────────────────────
-  const steel = new THREE.MeshStandardMaterial({ color: 0x1a1c1e, metalness: 1, roughness: 0.28 });
-  const darkSteel = new THREE.MeshStandardMaterial({ color: 0x0e0f10, metalness: 0.9, roughness: 0.42 });
+  // chrome / silver so the blade reads on a black page
+  const steel = new THREE.MeshStandardMaterial({ color: 0xf2f2f2, metalness: 1, roughness: 0.16 });
+  const darkSteel = new THREE.MeshStandardMaterial({ color: 0x9a9a9a, metalness: 1, roughness: 0.34 });
   const emissive = new THREE.MeshStandardMaterial({
-    color: 0x0b3d2b, emissive: ACCENT, emissiveIntensity: 2.4, metalness: 0.4, roughness: 0.3,
+    color: 0x111111, emissive: 0xffffff, emissiveIntensity: 2.6, metalness: 0.4, roughness: 0.3,
   });
 
   // ── build the sword / pen ──────────────────────────────────
@@ -119,10 +120,10 @@ export function initHero3D(canvas) {
   sword.add(tipGlow);
   tipGlow.position.y = 5.5;
 
-  // soft contact shadow under the object (over the white page)
+  // faint light pool under the object (over the black page)
   const shadow = new THREE.Mesh(
-    new THREE.PlaneGeometry(7, 7),
-    new THREE.MeshBasicMaterial({ map: radialTex(0x000000, 0.5), transparent: true, opacity: 0.14, depthWrite: false })
+    new THREE.PlaneGeometry(9, 9),
+    new THREE.MeshBasicMaterial({ map: radialTex(0xffffff, 0.5), transparent: true, opacity: 0.06, blending: THREE.AdditiveBlending, depthWrite: false })
   );
   shadow.rotation.x = -Math.PI / 2;
   shadow.position.y = -5.6;
@@ -161,10 +162,10 @@ export function initHero3D(canvas) {
     sword.rotation.y = t * (reduce ? 0 : 0.35) + pointer.x * 0.5;
     sword.rotation.z = 0.42 + pointer.y * 0.12 + progress * 0.5;
     sword.rotation.x = 0.1 - pointer.y * 0.15;
-    emissive.emissiveIntensity = 2.2 + Math.sin(t * 2.2) * 0.5;
-    tipGlow.material.opacity = (0.9 + Math.sin(t * 2.2) * 0.2) * (1 - progress);
+    emissive.emissiveIntensity = 2.4 + Math.sin(t * 2.2) * 0.5;
+    tipGlow.material.opacity = (0.8 + Math.sin(t * 2.2) * 0.2) * (1 - progress);
     shadow.position.x = sword.position.x;
-    shadow.material.opacity = 0.14 * (1 - progress);
+    shadow.material.opacity = 0.06 * (1 - progress);
 
     renderer.render(scene, camera);
   };

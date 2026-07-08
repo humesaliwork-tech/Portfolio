@@ -6,13 +6,13 @@
 
 The portfolio of **Syed Humes Ali**, Senior Creative Designer & 3D Artist (Dubai).
 
-A modern, editorial, typography-led single-page site — bright minimal palette
-(off-white + black + emerald), a calligraphy-meets-grotesk type system
+A modern, editorial, typography-led single-page site — stark black-&-white palette, a calligraphy-meets-grotesk type system
 (Instrument Serif italic + Bricolage Grotesque + Inter), a framed layout, custom
 cursor, smooth inertial scrolling, and an interactive **3D sword that doubles as
 a digital pen** (Three.js) floating in the hero — it rotates, tilts to the
 pointer and drifts on scroll. Work-first project list with hover previews and a
-slide-in detail panel. Design direction inspired by lml.cc, Studio K95 and TRIONN.
+slide-in detail panel. Tabbed navigation (Index / Work / Studio / Contact) with cinematic wipe
+transitions between views. Design direction inspired by lml.cc.
 
 ## Stack
 

@@ -7,12 +7,15 @@
   <meta name="description" content="Syed Humes Ali — Senior Creative Designer & 3D Artist based in Dubai. Brand, motion, 3D and campaign design." />
   <meta property="og:title" content="Syed Humes Ali — Creative Designer & 3D Artist" />
   <meta property="og:description" content="Brand, motion, 3D and campaign design from Dubai." />
-  <meta name="theme-color" content="#f4f3ee" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230f0f0c'/><text x='50' y='72' font-size='58' font-family='Arial' font-weight='700' fill='%23f4f3ee' text-anchor='middle'>H</text></svg>" />
+  <meta name="theme-color" content="#060606" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23060606'/><text x='50' y='72' font-size='58' font-family='Arial' font-weight='700' fill='%23f4f4f2' text-anchor='middle'>H</text></svg>" />
 </head>
 <body>
   <!-- custom cursor -->
   <div class="cursor" id="cursor" aria-hidden="true"><span class="cursor-label"></span></div>
+
+  <!-- tab wipe transition -->
+  <div class="wipe" id="wipe" aria-hidden="true"></div>
 
   <!-- framed border (K95-style) -->
   <div class="frame" aria-hidden="true">
@@ -33,10 +36,11 @@
     <a class="brand" href="#top" data-nav data-cursor="home">
       <span class="brand-mark">◆</span> Syed&nbsp;Humes&nbsp;Ali
     </a>
-    <nav class="nav" aria-label="Sections">
-      <a href="#work" data-nav>Work</a>
-      <a href="#about" data-nav>About</a>
-      <a href="#contact" data-nav>Contact</a>
+    <nav class="nav" id="tabs" aria-label="Sections">
+      <a href="#hero" data-nav data-tab="hero">Index</a>
+      <a href="#work" data-nav data-tab="work">Work</a>
+      <a href="#about" data-nav data-tab="studio">Studio</a>
+      <a href="#contact" data-nav data-tab="contact">Contact</a>
     </nav>
     <a class="avail" href="#contact" data-nav>
       <span class="avail-dot"></span> Available for work

@@ -103,10 +103,10 @@ Browse fonts at https://fontsource.org (every Google Font is there).
 Also at the top of `src/styles/main.css`:
 
 ```css
---bg:    #f4f3ee;   /* off-white background     */
---ink:   #0f0f0c;   /* near-black text          */
---green: #0e9f6e;   /* emerald accent           */
---muted: #6b6960;   /* secondary grey text      */
+--bg:    #060606;   /* near-black background    */
+--ink:   #f4f4f2;   /* off-white text           */
+--green: #f4f4f2;   /* the "accent" (white here)*/
+--muted: #7c7c78;   /* secondary grey text      */
 ```
 
 Change `--green` to re-theme the accent everywhere (links, hovers, the

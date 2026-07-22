@@ -1,0 +1,55 @@
+/* Ignyte — Color tokens
+   Source: Ignyte brand guidelines (ignyte.creatingbrandaffinity.com) +
+   brandmark artwork (Ignyte-Brandmark, Ignyte-Brandmark with Sub Brands).
+   "Brand language is dynamic, combining technology greys with inspiring
+   brighter yellows" — sampled directly from the brandmark star-icon gradient
+   and sub-brand lockup fills. */
+
+:root {
+  /* ---- Base palette ---- */
+  --ignyte-yellow-500: #f4ea5a;   /* core ignition yellow — brightest point of star-mark gradient */
+  --ignyte-yellow-300: #fef27f;   /* pale yellow tint — used in sub-brand lockups (Genesis, SOC) */
+  --ignyte-yellow-700: #c9bd2e;   /* deepened yellow for on-light hover/press states */
+
+  --ignyte-grey-050: #f6f7f7;
+  --ignyte-grey-100: #e9ebea;
+  --ignyte-grey-200: #d3d6d5;
+  --ignyte-grey-300: #c9ccc9;    /* "technology grey" — cool silver from star-mark gradient tail */
+  --ignyte-grey-400: #9a9d9f;
+  --ignyte-grey-500: #6b6e76;    /* mid technology grey */
+  --ignyte-grey-700: #3d3f45;
+  --ignyte-grey-900: #1a1a1c;    /* near-black, brandmark ink */
+
+  --ignyte-white: #ffffff;
+  --ignyte-black: #000000;
+
+  /* ---- Semantic aliases ---- */
+  --color-bg-page: var(--ignyte-white);
+  --color-bg-inverse: var(--ignyte-grey-900);
+  --color-bg-surface: var(--ignyte-white);
+  --color-bg-subtle: var(--ignyte-grey-050);
+  --color-bg-muted: var(--ignyte-grey-100);
+
+  --color-fg-primary: var(--ignyte-grey-900);
+  --color-fg-secondary: var(--ignyte-grey-500);
+  --color-fg-muted: var(--ignyte-grey-400);
+  --color-fg-inverse: var(--ignyte-white);
+  --color-fg-on-accent: var(--ignyte-grey-900); /* yellow is light — keep dark text on it */
+
+  --color-accent: var(--ignyte-yellow-500);
+  --color-accent-hover: var(--ignyte-yellow-700);
+  --color-accent-tint: var(--ignyte-yellow-300);
+  --color-accent-subtle: #fdf9dc;
+
+  --color-border-default: var(--ignyte-grey-200);
+  --color-border-strong: var(--ignyte-grey-400);
+  --color-border-on-inverse: rgba(255,255,255,0.16);
+
+  --color-focus-ring: var(--ignyte-yellow-500);
+
+  /* Status — greys/yellow brand has no defined semantic-status system;
+     these are conservative additions mapped to the grey/yellow family. */
+  --color-success: #2f8f5b;
+  --color-warning: var(--ignyte-yellow-700);
+  --color-danger: #c9432f;
+}
